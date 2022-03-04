@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Medical Decision Support</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+
+    <meta http-equiv="cache-control" content="max-age=0">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
+
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Medical Decision Support">
+    <!-- <meta property="og:description" content="Baseada na recomendação Cremepe 05/2020 que estabelece o fluxo de atendimento ao adulto com suspeita da SRAG, a calculadora do Escore Unificado para Priorização em Unidades de Terapia Intensiva utiliza a combinação do SOFA simplificado, ICC, CFS e KPS."> -->
+    <meta property="og:description" content="Calculadora do Escore Unificado para Priorização em Unidades de Terapia Intensiva. Utilizando combinação do Sequential Organ Failure Assessment (SOFA) simplificado, Índice de Comorbidades de Charlson (ICC), Clinical Frailty Scale (CFS) e peformance status de Karnofsky." />
+    <!-- <meta property="og:description" content="Calculadora de Escore Unificado para Priorização em Unidades de Terapia Intensiva - EUP-UTI" /> -->
+    <meta property="og:image" content="img/favicon300.png">
+    <link rel="stylesheet" href="./MedicalDecisionSupport_files/style.min.css">
+    <script async="" src="chrome-extension://fhamhppabjaafimidmelnmpfangjdnhj/analytics.js"></script>
+    <script type="text/javascript" async="" src="./MedicalDecisionSupport_files/analytics.js"></script>
+    <script async="" src="./MedicalDecisionSupport_files/analytics.js"></script>
+    <script async="" src="./MedicalDecisionSupport_files/js"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+
+        gtag("config", "UA-83881881-4");
+    </script>
+    <meta name="olhardigital_frete" content="UA-23288050-8">
+    <meta name="olhardigital_mango" content="UA-23288050-14">
+</head>
+<evlist></evlist>
+
+<body>
+    <header class="header">
+        <section class="section">
+        </section>
+    </header>
+
+    <section class="section">
+        <a>Para esse trabalho, será realizado um cálculo conforme os parâmetros informados.</a>
+        
+        <h2>Identificação</h2>
+        <div class="row">
+            <div><label for="a">Nome:</label></div>
+            <div><input type="text" id="a" name="nome"></div>
+        </div>
+        <div class="row">
+            <div><label for="b">Idade:</label></div>
+            <div><input type="text" id="b" name="idade"></div>
+        </div>
+        <div class="row">
+            <div><label for="c">Data de nascimento:</label></div>
+            <div><input type="text" id="c" name="datanascimento"></div>
+        </div>
+        <div class="row">
+            <div><label for="d">Sexo:</label></div>
+            <div><input type="text" id="d" name="sexo"></div>
+        </div>
+    </section>
+
+<!--    <section class="section">
+        <div style="background-color: #fbf6ca;padding: 18px 32px;border: 1px dashed #cabc72;color: #8a7637;border-radius: 4px;font-weight: 600;font-size: 15px;line-height: 22.5px;">
+            Indicado para comunicação com a Central de Regulação de Leitos de Pernambuco, conforme <a href="https://sistemas.cfm.org.br/normas/visualizar/resolucoes/PE/2020/5" target="_blank">Resolução 05/2020</a>
+        </div>
+    </section> -->
+    <section class="section" id="somaSOFA-trigger">
+        <h2>1. Previsão de sobrevivência a curto prazo, <span>determinado o <i>Sequential Organ Failure Assessment</i> - SOFA (simplificado).</span></h2>
+        <div class="row">
+            <div>
+                <div class="item-title-sticky">
+                    <span class="item-title">NEUROLÓGICO</span>
+                    <span class="item-subtitle">Escala de Coma de Glasgow</span>
+                </div>
+            </div>
+            <div>
+                <section class="check-group">
+                    <label for="n1" class="check-tri">
+						<input id="n1" type="radio" class="check-act" name="neuro" value="0">
+						<div class="check-btn" data-val="0">
+							<span class="title">15</span>
+						</div>
+					</label>
+                    <label for="n2" class="check-tri">
+						<input id="n2" type="radio" class="check-act" name="neuro" value="1">
+						<div class="check-btn" data-val="+1">
+							<span class="title">13 a 14</span>
+						</div>
+					</label>
+                    <label for="n3" class="check-tri">
+						<input id="n3" type="radio" class="check-act" name="neuro" value="2">
+						<div class="check-btn" data-val="+2">
+							<span class="title">10 a 12</span>
+						</div>
+					</label>
+                    <label for="n4" class="check-tri">
+						<input id="n4" type="radio" class="check-act" name="neuro" value="3">
+						<div class="check-btn" data-val="+3">
+							<span class="title">6 a 9</span>
+						</div>
+					</label>
+                    <label for="n5" class="check-tri">
+						<input id="n5" type="radio" class="check-act" name="neuro" value="4">
+						<div class="check-btn" data-val="+4">
+							<span class="title">&lt;6</span>
+						</div>
+					</label>
+                </section>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="item-title-sticky">
+                    <span class="item-title">CARDIOVASCULAR</span>
+                    <span class="item-subtitle">Hipotensão,<br>mmHG</span>
+                </div>
+            </div>
+            <div>
+                <section class="check-group">
+                    <label for="c1" class="check-tri">
+						<input id="c1" type="radio" class="check-act" name="cardio" value="0">
+						<div class="check-btn" data-val="0">
+							<span class="title">-</span>
+						</div>
+					</label>
+                    <label for="c2" class="check-tri">
+						<input id="c2" type="radio" class="check-act" name="cardio" value="1">
+						<div class="check-btn" data-val="+1">
+							<span class="title">PAM&lt;70mmHg</span>
+						</div>
+					</label>
+                    <label for="c3" class="check-tri">
+						<input id="c3" type="radio" class="check-act" name="cardio" value="2">
+						<div class="check-btn" data-val="+2">
+							<span class="title">Dopamina ≤ 5 ou Dobutamina qualquer dose</span>
+						</div>
+					</label>
+                    <label for="c4" class="check-tri">
+						<input id="c4" type="radio" class="check-act" name="cardio" value="3">
+						<div class="check-btn" data-val="+3">
+							<span class="title">Dopamina &gt; 5 ou Noradrenalina ≤ 0,1</span>
+						</div>
+					</label>
+                    <label for="c5" class="check-tri">
+						<input id="c5" type="radio" class="check-act" name="cardio" value="4">
+						<div class="check-btn" data-val="+4">
+							<span class="title">Dopamina &gt; 15 ou Noradrenalina &gt; 0,1</span>
+						</div>
+					</label>
+                </section>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="item-title-sticky">
+                    <span class="item-title">RESPIRATÓRIO</span>
+                    <span class="item-subtitle">Saturação<br>Periférica de O2</span>
+                </div>
+            </div>
+            <div>
+                <section class="check-group">
+                    <label for="r1" class="check-tri">
+						<input id="r1" type="radio" name="resp" value="0">
+						<div class="check-btn" data-val="0">
+							<span class="title">-</span>
+						</div>
+					</label>
+                    <label for="r2" class="check-tri">
+						<input id="r2" type="radio" class="check-act" name="resp" value="1">
+						<div class="check-btn" data-val="+1">
+							<span class="title">SpO2&gt;92% com Cateter nasal O2 até 2l/min</span>
+						</div>
+					</label>
+                    <label for="r3" class="check-tri">
+						<input id="r3" type="radio" class="check-act" name="resp" value="2">
+						<div class="check-btn" data-val="+2">
+							<span class="title">SpO2&gt; 92% com Cateter nasal O2 até 5l/min</span>
+						</div>
+					</label>
+                    <label for="r4" class="check-tri">
+						<input id="r4" type="radio" class="check-act" name="resp" value="3">
+						<div class="check-btn" data-val="+3">
+							<span class="title">SpO2&gt;92% com ventilação mecânica com FiO2 até 40%</span>
+						</div>
+					</label>
+                    <label for="r5" class="check-tri">
+						<input id="r5" type="radio" class="check-act" name="resp" value="4">
+						<div class="check-btn" data-val="+4">
+							<span class="title">SpO2&gt; 92% com ventilação mecânica com FiO2&gt; 40%</span>
+						</div>
+					</label>
+                </section>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="item-title-sticky">
+                    <span class="item-title">COAGULAÇÃO</span>
+                    <span class="item-subtitle">Plaquetas 10³/µl</span>
+                </div>
+            </div>
+            <div>
+                <section class="check-group">
+                    <label for="co1" class="check-tri">
+						<input id="co1" type="radio" class="check-act" name="coag" value="0">
+						<div class="check-btn" data-val="0">
+							<span class="title">-</span>
+						</div>
+					</label>
+                    <label for="co2" class="check-tri">
+						<input id="co2" type="radio" class="check-act" name="coag" value="1">
+						<div class="check-btn" data-val="+1">
+							<span class="title"> &lt;150</span>
+						</div>
+					</label>
+                    <label for="co3" class="check-tri">
+						<input id="co3" type="radio" class="check-act" name="coag" value="2">
+						<div class="check-btn" data-val="+2">
+							<span class="title"> &lt;100</span>
+						</div>
+					</label>
+                    <label for="co4" class="check-tri">
+						<input id="co4" type="radio" class="check-act" name="coag" value="3">
+						<div class="check-btn" data-val="+3">
+							<span class="title"> &lt;50</span>
+						</div>
+					</label>
+                    <label for="co5" class="check-tri">
+						<input id="co5" type="radio" class="check-act" name="coag" value="4">
+						<div class="check-btn" data-val="+4">
+							<span class="title"> &lt;20</span>
+						</div>
+					</label>
+                </section>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="item-title-sticky">
+                    <span class="item-title">HEPÁTICO</span>
+                    <span class="item-subtitle">INR<br>Inspeção</span>
+                </div>
+            </div>
+            <div>
+                <section class="check-group">
+                    <label for="he1" class="check-tri">
+						<input id="he1" type="radio" class="check-act" name="hepa" value="0">
+						<div class="check-btn" data-val="0">
+							<span class="title">-</span>
+						</div>
+					</label>
+                    <label for="he2" class="check-tri">
+						<input id="he2" type="radio" class="check-act" name="hepa" value="1">
+						<div class="check-btn" data-val="+1">
+							<span class="title">&lt;1,1<br>Anictérico</span>
+						</div>
+					</label>
+                    <label for="he3" class="check-tri">
+						<input id="he3" type="radio" class="check-act" name="hepa" value="2">
+						<div class="check-btn" data-val="+2">
+							<span class="title">1,1 - 1,36</span>
+						</div>
+					</label>
+                    <label for="he4" class="check-tri">
+						<input id="he4" type="radio" class="check-act" name="hepa" value="3">
+						<div class="check-btn" data-val="+3">
+							<span class="title">1,36 - 1,8</span>
+						</div>
+					</label>
+                    <label for="he5" class="check-tri">
+						<input id="he5" type="radio" class="check-act" name="hepa" value="4">
+						<div class="check-btn" data-val="+4">
+							<span class="title">1,88 - 2,15<br>Ictérico</span>
+						</div>
+					</label>
+                </section>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="item-title-sticky">
+                    <span class="item-title">RENAL</span>
+                    <span class="item-subtitle">Creatinina (mg/dL)<br>Diurese (mL/dia)</span>
+                </div>
+            </div>
+            <div>
+                <section class="check-group">
+                    <label for="re1" class="check-tri">
+						<input id="re1" type="radio" class="check-act" name="renal" value="0">
+						<div class="check-btn" data-val="0">
+							<span class="title">-</span>
+						</div>
+					</label>
+                    <label for="re2" class="check-tri">
+						<input id="re2" type="radio" class="check-act" name="renal" value="1">
+						<div class="check-btn" data-val="+1">
+							<span class="title">1,2 - 1,9<br> &gt;500</span>
+						</div>
+					</label>
+                    <label for="re3" class="check-tri">
+						<input id="re3" type="radio" class="check-act" name="renal" value="2">
+						<div class="check-btn" data-val="+2">
+							<span class="title">2 - 3,4<br>-</span>
+						</div>
+					</label>
+                    <label for="re4" class="check-tri">
+						<input id="re4" type="radio" class="check-act" name="renal" value="3">
+						<div class="check-btn" data-val="+3">
+							<span class="title">3,5 - 4,9<br> &lt;500</span>
+						</div>
+					</label>
+                    <label for="re5" class="check-tri">
+						<input id="re5" type="radio" class="check-act" name="renal" value="4">
+						<div class="check-btn" data-val="+4">
+							<span class="title"> &gt;5,0<br> &lt;200</span>
+						</div>
+					</label>
+                </section>
+            </div>
+        </div>
+        <div class="result-sub">
+            <div class="result-sub-row">
+                <span class="nth1">SOFA</span>
+                <span class="nth2">
+					<span class="somaSOFA-view pts">0</span>
+                </span>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <h2>2. Previsão de sobrevivência a longo prazo,<span> avaliado pela presença de comorbidades (pelo índice de Comorbidades de Charlson) e/ou Fragilidade (pela <i>Clinical Frailtv Scale</i>).</span></h2>
+        <div class="row">
+            <div>
+                <div class="item-title-sticky">
+                    <span class="item-title">ICC</span>
+                    <span class="item-subtitle">Índice de Comorbidades</span>
+                </div>
+            </div>
+            <div>
+                <section class="check-group" id="somaICC-trigger">
+                    <label class="check-tri" for="icc0">
+						<input type="checkbox" class="check-act" value="1" id="icc0">
+						<div class="check-btn" data-val="+1"><span class="title">Demência</span></div>
+					</label>
+                    <label class="check-tri" for="icc1">
+						<input type="checkbox" class="check-act" value="2" id="icc1">
+						<div class="check-btn" data-val="+2"><span class="title">Diabetes com complicação</span></div>
+					</label>
+                    <label class="check-tri" for="icc2">
+						<input type="checkbox" class="check-act" value="1" id="icc2">
+						<div class="check-btn" data-val="+1"><span class="title">Diabetes sem complicação</span></div>
+					</label>
+                    <label class="check-tri" for="icc3">
+						<input type="checkbox" class="check-act" value="1" id="icc3">
+						<div class="check-btn" data-val="+1"><span class="title">Doença cérebro – vascular</span></div>
+					</label>
+                    <label class="check-tri" for="icc4">
+						<input type="checkbox" class="check-act" value="3" id="icc4">
+						<div class="check-btn" data-val="+3"><span class="title">Doença do fígado severa ou moderada</span></div>
+					</label>
+                    <label class="check-tri" for="icc5">
+						<input type="checkbox" class="check-act" value="1" id="icc5">
+						<div class="check-btn" data-val="+1"><span class="title">Doença do tecido conjuntivo</span></div>
+					</label>
+                    <label class="check-tri" for="icc6">
+						<input type="checkbox" class="check-act" value="1" id="icc6">
+						<div class="check-btn" data-val="+1"><span class="title">Doença hepática crônica ou cirrose</span></div>
+					</label>
+                    <label class="check-tri" for="icc7">
+						<input type="checkbox" class="check-act" value="1" id="icc7">
+						<div class="check-btn" data-val="+1"><span class="title">Doença pulmonar crônica</span></div>
+					</label>
+                    <label class="check-tri" for="icc8">
+						<input type="checkbox" class="check-act" value="2" id="icc8">
+						<div class="check-btn" data-val="+2"><span class="title">Doença renal severa ou moderada</span></div>
+					</label>
+                    <label class="check-tri" for="icc9">
+						<input type="checkbox" class="check-act" value="1" id="icc9">
+						<div class="check-btn" data-val="+1"><span class="title">Doença vascular periférica</span></div>
+					</label>
+                    <label class="check-tri" for="icc10">
+						<input type="checkbox" class="check-act" value="2" id="icc10">
+						<div class="check-btn" data-val="+2"><span class="title">Hemiplegia ou paraplegia</span></div>
+					</label>
+                    <label class="check-tri" for="icc11">
+						<input type="checkbox" class="check-act" value="0" id="icc11">
+						<div class="check-btn" data-val="0"><span class="title">Hipertensão</span></div>
+					</label>
+                    <label class="check-tri" for="icc12">
+						<input type="checkbox" class="check-act" value="1" id="icc12">
+						<div class="check-btn" data-val="+1"><span class="title">Insuficiência cardíaca congestiva</span></div>
+					</label>
+                    <label class="check-tri" for="icc13">
+						<input type="checkbox" class="check-act" value="2" id="icc13">
+						<div class="check-btn" data-val="+2"><span class="title">Leucemia</span></div>
+					</label>
+                    <label class="check-tri" for="icc14">
+						<input type="checkbox" class="check-act" value="2" id="icc14">
+						<div class="check-btn" data-val="+2"><span class="title">Linfoma</span></div>
+					</label>
+                    <label class="check-tri" for="icc15">
+						<input type="checkbox" class="check-act" value="6" id="icc15">
+						<div class="check-btn" data-val="+6"><span class="title">SIDA</span></div>
+					</label>
+                    <label class="check-tri" for="icc16">
+						<input type="checkbox" class="check-act" value="2" id="icc16">
+						<div class="check-btn" data-val="+2"><span class="title">Tumor maligno</span></div>
+					</label>
+                    <label class="check-tri" for="icc17">
+						<input type="checkbox" class="check-act" value="6" id="icc17">
+						<div class="check-btn" data-val="+6"><span class="title">Tumor sólido metastático</span></div>
+					</label>
+                    <label class="check-tri" for="icc18">
+						<input type="checkbox" class="check-act" value="1" id="icc18">
+						<div class="check-btn" data-val="+1"><span class="title">Úlcera gastroduodenal</span></div>
+					</label>
+                </section>
+            </div>
+        </div>
+        <div class="row phone-only">
+            <div>
+                <div class="item-title-sticky item-title-sticky--phone-only">
+                    <span class="item-title">CFS - <i>Clinical Frailtv Scale</i></span>
+                    <span class="item-subtitle">* Só deve ser aplicada para doentes com idade igual ou superior a 60 anos.</span>
+                </div>
+            </div>
+            <div>
+                <section class="check-group" id="serializeCFS">
+                    <!-- 					<label for="cfs0" class="check-tri">
+						<input id="cfs0" type="radio" name="cfs" value="0">
+						<div class="check-btn">
+							<span class="title">-</span>
+						</div>
+					</label> -->
+                    <label for="cfs1" class="check-tri">
+						<input id="cfs1" type="radio" name="cfs" value="1">
+						<div class="check-btn check-btn--cfs" data-val="+1">
+							<span class="img-cfs icon-cfs1"></span>
+							<span class="title">Muito ativo</span>
+							<span class="desc-big">Pessoas que estão robustas, ativas, com energia e motivadas. Essas pessoas normalmente se exercitam regularmente. Elas estão entre as mais ativas para sua idade.</span>
+						</div>
+					</label>
+                    <label for="cfs2" class="check-tri">
+						<input id="cfs2" type="radio" name="cfs" value="2">
+						<div class="check-btn check-btn--cfs" data-val="+2">
+							<span class="img-cfs icon-cfs2"></span>
+							<span class="title">Ativo</span>
+							<span class="desc-big">Pessoas que não apresentam nenhum sintoma ativo de doença, mas estão menos ativas que as da categoria I. Frequentemente se exercitam ou não são muito ativas ocasionalmente, exemplo: em determinada época do ano.</span>
+						</div>
+					</label>
+                    <label for="cfs3" class="check-tri">
+						<input id="cfs3" type="radio" name="cfs" value="3">
+						<div class="check-btn check-btn--cfs" data-val="+3">
+							<span class="img-cfs icon-cfs3"></span>
+							<span class="title">Regular</span>
+							<span class="desc-big">Pessoas com problemas de saúde bem controlados, mas não se exercitam regularmente além da caminhada de rotina.</span>
+						</div>
+					</label>
+                    <label for="cfs4" class="check-tri">
+						<input id="cfs4" type="radio" name="cfs" value="4">
+						<div class="check-btn check-btn--cfs" data-val="+4">
+							<span class="img-cfs icon-cfs4"></span>
+							<span class="title">Vulnerável</span>
+							<span class="desc-big">Apesar de não depender dos outros para ajuda diária, frequentemente os sintomas limitam as atividades. Uma queixa comum é sentir-se mais lento e/ou mais cansado ao longo do dia.</span>
+						</div>
+					</label>
+                    <label for="cfs5" class="check-tri">
+						<input id="cfs5" type="radio" name="cfs" value="5">
+						<div class="check-btn check-btn--cfs" data-val="+5">
+							<span class="img-cfs icon-cfs5"></span>
+							<span class="title">Levemente Frágil</span>
+							<span class="desc-big">Estas pessoas frequentemente apresentam lentidão evidente e precisam de ajuda para atividades instrumentais de vida diária (AIVD) mais complexas (finanças, transporte, trabalho doméstico pesado, medicações). Tipicamente, a fragilidade leve progressivamente prejudica as compras e passeios desacompanhados, preparo de refeições e tarefas domésticas.</span>
+						</div>
+					</label>
+                    <label for="cfs6" class="check-tri">
+						<input id="cfs6" type="radio" name="cfs" value="6">
+						<div class="check-btn check-btn--cfs" data-val="+6">
+							<span class="img-cfs icon-cfs6"></span>
+							<span class="title">Moderadamente Frágil</span>
+							<span class="desc-big">Pessoas que precisam de ajuda em todas as atividades externas e na manutenção da casa. Em casa, frequentemente têm dificuldades com escadas e necessitam de ajuda no banho e podem necessitar de ajuda mínima (apoio próximo) para se vestirem.</span>
+						</div>
+					</label>
+                    <label for="cfs7" class="check-tri">
+						<input id="cfs7" type="radio" name="cfs" value="7">
+						<div class="check-btn check-btn--cfs" data-val="+7">
+							<span class="img-cfs icon-cfs7"></span>
+							<span class="title">Muito Frágil</span>
+							<span class="desc-big">Completamente dependentes para cuidados pessoais, por qualquer causa (física ou cognitiva). No entanto, são aparentemente estáveis e sem alto risco de morte (dentro de 6 meses).</span>
+						</div>
+					</label>
+                    <label for="cfs8" class="check-tri">
+						<input id="cfs8" type="radio" name="cfs" value="8">
+						<div class="check-btn check-btn--cfs" data-val="+8">
+							<span class="img-cfs icon-cfs8"></span>
+							<span class="title">Severamente Frágil</span>
+							<span class="desc-big">Completamente dependentes, aproximando-se do fim da vida. Tipicamente incapaz de se recuperarem de uma doença leve.</span>
+						</div>
+					</label>
+                </section>
+            </div>
+        </div>
+        <div class="result-sub">
+            <div class="result-sub-row">
+                <span class="nth1">ICC</span>
+                <span class="nth2"><span class="somaICC-view pts">0</span></span>
+            </div>
+            <div class="result-sub-row">
+                <span class="nth1">CFS</span>
+                <span class="nth2"><span class="serializeCFS-view pts">0</span></span>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <h2>3. Previsão de sobrevivência global e de resposta terapêutica, <span>analisada pelo <i>Karnofsky Performance Status</i> KPS (adaptado).</span></h2>
+        <div class="row">
+            <div>
+                <div class="item-title-sticky">
+                    <span class="item-title">KPS</span>
+                    <span class="item-subtitle"><i>Karnofsky Performance Status</i></span>
+                </div>
+            </div>
+            <div>
+                <section class="check-group" id="serializeKPS">
+                    <label for="kp1" class="check-tri">
+						<input id="kp1" type="radio" name="kps" value="1">
+						<div class="check-btn" data-val="+1">
+							<span class="title">Com ou sem doença crônica, consegue trabalhar normalmente</span>
+							<span class="desc-fade">KPS 100%</span>
+						</div>
+					</label>
+                    <label for="kp2" class="check-tri">
+						<input id="kp2" type="radio" name="kps" value="2">
+						<div class="check-btn" data-val="+2">
+							<span class="title">Com doença crônica, consegue trabalhar apesar de ter sintomas</span>
+							<span class="desc-fade">KPS 80-90%</span>
+						</div>
+					</label>
+                    <label for="kp3" class="check-tri">
+						<input id="kp3" type="radio" name="kps" value="3">
+						<div class="check-btn" data-val="+3">
+							<span class="title">Não consegue trabalhar mas mantém hobbies e autocuidado</span>
+							<span class="desc-fade">KPS 50-60-70%</span>
+						</div>
+					</label>
+                    <label for="kp4" class="check-tri">
+						<input id="kp4" type="radio" name="kps" value="4">
+						<div class="check-btn" data-val="+4">
+							<span class="title">É incapaz de cuidar de si mesmo</span>
+							<span class="desc-fade">KPS 10-20-30-40%</span>
+						</div>
+					</label>
+                </section>
+            </div>
+        </div>
+        <div class="result-sub">
+            <div class="result-sub-row">
+                <span class="nth1">KPS</span>
+                <span class="nth2"><span class="serializeKPS-view pts">0</span></span>
+            </div>
+        </div>
+    </section>
+    <section class="section result-sticky">
+        <div class="result">
+            <div class="result-row result-enfase">
+                <span class="nth1">EUP-UTI</span>
+                <span class="nth2"><span class="EUP-view pts">0</span></span>
+            </div>
+            <div class="result-row">
+                <span class="nth1">SOFA Simplificado</span>
+                <span class="nth2">
+					<span class="view-result-eup-sofa pts">0</span>
+                <span class="view-result-sofa small"></span>
+                </span>
+            </div>
+            <div class="result-row">
+                <span class="nth1">ICC ou CFS</span>
+                <span class="nth2">
+					<span class="view-result-eup-icccfs pts">0</span>
+                <span class="view-result-icccfs small"></span>
+                </span>
+            </div>
+            <div class="result-row">
+                <span class="nth1">KPS</span>
+                <span class="nth2"><span class="view-result-kps pts">0</span></span>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="box">
+            <div class="box-title">Fórmula</div>
+            <div class="box-question">1. Previsão de sobrevivência a curto prazo, determinado o <i>Sequential Organ Failure Assessment</i> - SOFA (simplificado).</div>
+            <!-- table>tbody>tr(td+td+td)*4 -->
+            <table>
+                <tbody>
+                    <tr>
+                        <td>SOFA Simplificado</td>
+                        <td>&lt;6</td>
+                        <td>(1 ponto)</td>
+                    </tr>
+                    <tr>
+                        <td>SOFA Simplificado</td>
+                        <td>6-9</td>
+                        <td>(2 pontos)</td>
+                    </tr>
+                    <tr>
+                        <td>SOFA Simplificado</td>
+                        <td>10-12</td>
+                        <td>(3 pontos)</td>
+                    </tr>
+                    <tr>
+                        <td>SOFA Simplificado</td>
+                        <td>&gt;12</td>
+                        <td>(4 pontos)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="box-question">2. Previsão de sobrevivência a longo prazo, avaliado pela presença de comorbidades (pelo Índice de Comorbidades de Charlson) e/ou Fragilidade (pela <i>Clinical Frailtv Scale</i>).</div>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>ICC 0-1</td>
+                        <td>ou</td>
+                        <td>CFS&lt;4</td>
+                        <td>(1 ponto)</td>
+                    </tr>
+                    <tr>
+                        <td>ICC 2</td>
+                        <td>ou</td>
+                        <td>CFS=4</td>
+                        <td>(2 pontos)</td>
+                    </tr>
+                    <tr>
+                        <td>ICC 3-5</td>
+                        <td>ou</td>
+                        <td>CFS 5 e 6</td>
+                        <td>(3 pontos)</td>
+                    </tr>
+                    <tr>
+                        <td>ICC&gt;5</td>
+                        <td>ou</td>
+                        <td>CFS 7 e 8</td>
+                        <td>(4 pontos)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="box-question">3. Previsão de sobrevivência global e de resposta terapêutica, analisada pelo <i>Karnofsky Performance Status</i> KPS (adaptado).</div>
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="width: 250px;">Com ou sem doença crônica, consegue trabalhar normalmente</td>
+                        <td>KPS 100%</td>
+                        <td>(1 ponto)</td>
+                    </tr>
+                    <tr>
+                        <td>Com doença crônica, consegue trabalhar apesar de ter sintomas</td>
+                        <td>KPS 80-90%</td>
+                        <td>(2 pontos)</td>
+                    </tr>
+                    <tr>
+                        <td>Não consegue trabalhar mas mantém hobbies e autocuidado</td>
+                        <td>KPS 50-60-70%</td>
+                        <td>(3 pontos)</td>
+                    </tr>
+                    <tr>
+                        <td>É incapaz de cuidar de si mesmo</td>
+                        <td>KPS 10-20-30-40%</td>
+                        <td>(4 pontos)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <script src="./MedicalDecisionSupport_files/jquery-3.3.1.min.js"></script>
+    <script src="./MedicalDecisionSupport_files/functions.js"></script>
+
+    <script>
+        mendeleyWebImporter = {
+            downloadPdfs(e, t) {
+                return this._call('downloadPdfs', [e, t]);
+            },
+            open() {
+                return this._call('open', []);
+            },
+            setLoginToken(e) {
+                return this._call('setLoginToken', [e]);
+            },
+            _call(methodName, methodArgs) {
+                const id = Math.random();
+                window.postMessage({
+                    id,
+                    token: '0.6304166107968265',
+                    methodName,
+                    methodArgs
+                }, 'https://cremepe.org.br');
+                return new Promise(resolve => {
+                    const listener = window.addEventListener('message', event => {
+                        const data = event.data;
+                        if (typeof data !== 'object' || !('result' in data) || data.id !== id) return;
+                        window.removeEventListener('message', listener);
+                        resolve(data.result);
+                    });
+                });
+            }
+        };
+    </script>
+    <div id="modal-root"></div>
+</body>
+
+</html>
