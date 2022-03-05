@@ -16,8 +16,8 @@
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Medical Decision Support">
-    <!-- <meta property="og:description" content="Baseada na recomendação Cremepe 05/2020 que estabelece o fluxo de atendimento ao adulto com suspeita da SRAG, a calculadora do Escore Unificado para Priorização em Unidades de Terapia Intensiva utiliza a combinação do SOFA simplificado, ICC, CFS e KPS."> -->
-    <meta property="og:description" content="Calculadora do Escore Unificado para Priorização em Unidades de Terapia Intensiva. Utilizando combinação do Sequential Organ Failure Assessment (SOFA) simplificado, Índice de Comorbidades de Charlson (ICC), Clinical Frailty Scale (CFS) e peformance status de Karnofsky." />
+    <!-- <meta property="og:description" content="Baseada na recomendação Cremepe 05/2020 que estabelece o fluxo de atendimento ao adulto com suspeita da SRAG, a calculadora do Escore Unificado para Priorização em Unidades de Terapia Intensiva utiliza a combinação do SOFA simplificado, ICC, ECOG e KPS."> -->
+    <meta property="og:description" content="Calculadora do Escore Unificado para Priorização em Unidades de Terapia Intensiva. Utilizando combinação do Sequential Organ Failure Assessment (SOFA) simplificado, Índice de Comorbidades de Charlson (ICC), Clinical Frailty Scale (ECOG) e peformance status de Karnofsky." />
     <!-- <meta property="og:description" content="Calculadora de Escore Unificado para Priorização em Unidades de Terapia Intensiva - EUP-UTI" /> -->
     <meta property="og:image" content="img/favicon300.png">
     <link rel="stylesheet" href="./MedicalDecisionSupport_files/style.min.css">
@@ -43,36 +43,40 @@
 <body>
     <header class="header">
         <section class="section">
+            <h1>Medical Decision Support</h1>
         </section>
     </header>
 
     <section class="section">
-        <a>Para esse trabalho, será realizado um cálculo conforme os parâmetros informados.</a>
-        
-        <h2>Identificação</h2>
+        <h2> Dados do Paciente.</h2>
         <div class="row">
-            <div><label for="a">Nome:</label></div>
-            <div><input type="text" id="a" name="nome"></div>
+            <div>
+                <div class="item-title-sticky">
+                    <span class="item-title">Identificação</span>
+                    <span class="item-subtitle"><i>Dados do paciente para identificação.</i></span>
+                </div>
+            </div>
         </div>
         <div class="row">
-            <div><label for="b">Idade:</label></div>
-            <div><input type="text" id="b" name="idade"></div>
+            <div><label for="nome">Nome:</label></div>
+            <div><input type="text" id="nome" name="nome"></div>
         </div>
         <div class="row">
-            <div><label for="c">Data de nascimento:</label></div>
-            <div><input type="text" id="c" name="datanascimento"></div>
+            <div><label for="idade">Idade:</label></div>
+            <div><input type="text" id="idade" name="idade"></div>
         </div>
         <div class="row">
-            <div><label for="d">Sexo:</label></div>
-            <div><input type="text" id="d" name="sexo"></div>
+            <div><label for="sexo">Sexo:</label></div>
+            <div>
+                <select id="sexo">
+                <option value="">-</option>
+                <option value="0">Feminino</option>
+                <option value="1">Masculino</option>
+                </select>
+            </div>
         </div>
     </section>
 
-<!--    <section class="section">
-        <div style="background-color: #fbf6ca;padding: 18px 32px;border: 1px dashed #cabc72;color: #8a7637;border-radius: 4px;font-weight: 600;font-size: 15px;line-height: 22.5px;">
-            Indicado para comunicação com a Central de Regulação de Leitos de Pernambuco, conforme <a href="https://sistemas.cfm.org.br/normas/visualizar/resolucoes/PE/2020/5" target="_blank">Resolução 05/2020</a>
-        </div>
-    </section> -->
     <section class="section" id="somaSOFA-trigger">
         <h2>1. Previsão de sobrevivência a curto prazo, <span>determinado o <i>Sequential Organ Failure Assessment</i> - SOFA (simplificado).</span></h2>
         <div class="row">
@@ -337,7 +341,10 @@
         </div>
     </section>
     <section class="section">
-        <h2>2. Previsão de sobrevivência a longo prazo,<span> avaliado pela presença de comorbidades (pelo índice de Comorbidades de Charlson) e/ou Fragilidade (pela <i>Clinical Frailtv Scale</i>).</span></h2>
+        <h2>2. Previsão de sobrevivência a longo prazo,<span> avaliado pela presença de comorbidades. </span></h2>
+        <a> Na revisão do AMIB 2020, apenas duas categorias são mantidas: dois pontos são alocados a pacientes 
+            com expectativa de sobrevida inferior a cinco anos 
+            e quatro pontos alocados a pacientes com expectativa de sobrevida inferior a um ano; </a>
         <div class="row">
             <div>
                 <div class="item-title-sticky">
@@ -347,81 +354,13 @@
             </div>
             <div>
                 <section class="check-group" id="somaICC-trigger">
-                    <label class="check-tri" for="icc0">
-						<input type="checkbox" class="check-act" value="1" id="icc0">
-						<div class="check-btn" data-val="+1"><span class="title">Demência</span></div>
-					</label>
                     <label class="check-tri" for="icc1">
 						<input type="checkbox" class="check-act" value="2" id="icc1">
-						<div class="check-btn" data-val="+2"><span class="title">Diabetes com complicação</span></div>
+						<div class="check-btn" data-val="+2"><span class="title">Pacientes com expectativa de sobrevida inferior a cinco anos</span></div>
 					</label>
                     <label class="check-tri" for="icc2">
-						<input type="checkbox" class="check-act" value="1" id="icc2">
-						<div class="check-btn" data-val="+1"><span class="title">Diabetes sem complicação</span></div>
-					</label>
-                    <label class="check-tri" for="icc3">
-						<input type="checkbox" class="check-act" value="1" id="icc3">
-						<div class="check-btn" data-val="+1"><span class="title">Doença cérebro – vascular</span></div>
-					</label>
-                    <label class="check-tri" for="icc4">
-						<input type="checkbox" class="check-act" value="3" id="icc4">
-						<div class="check-btn" data-val="+3"><span class="title">Doença do fígado severa ou moderada</span></div>
-					</label>
-                    <label class="check-tri" for="icc5">
-						<input type="checkbox" class="check-act" value="1" id="icc5">
-						<div class="check-btn" data-val="+1"><span class="title">Doença do tecido conjuntivo</span></div>
-					</label>
-                    <label class="check-tri" for="icc6">
-						<input type="checkbox" class="check-act" value="1" id="icc6">
-						<div class="check-btn" data-val="+1"><span class="title">Doença hepática crônica ou cirrose</span></div>
-					</label>
-                    <label class="check-tri" for="icc7">
-						<input type="checkbox" class="check-act" value="1" id="icc7">
-						<div class="check-btn" data-val="+1"><span class="title">Doença pulmonar crônica</span></div>
-					</label>
-                    <label class="check-tri" for="icc8">
-						<input type="checkbox" class="check-act" value="2" id="icc8">
-						<div class="check-btn" data-val="+2"><span class="title">Doença renal severa ou moderada</span></div>
-					</label>
-                    <label class="check-tri" for="icc9">
-						<input type="checkbox" class="check-act" value="1" id="icc9">
-						<div class="check-btn" data-val="+1"><span class="title">Doença vascular periférica</span></div>
-					</label>
-                    <label class="check-tri" for="icc10">
-						<input type="checkbox" class="check-act" value="2" id="icc10">
-						<div class="check-btn" data-val="+2"><span class="title">Hemiplegia ou paraplegia</span></div>
-					</label>
-                    <label class="check-tri" for="icc11">
-						<input type="checkbox" class="check-act" value="0" id="icc11">
-						<div class="check-btn" data-val="0"><span class="title">Hipertensão</span></div>
-					</label>
-                    <label class="check-tri" for="icc12">
-						<input type="checkbox" class="check-act" value="1" id="icc12">
-						<div class="check-btn" data-val="+1"><span class="title">Insuficiência cardíaca congestiva</span></div>
-					</label>
-                    <label class="check-tri" for="icc13">
-						<input type="checkbox" class="check-act" value="2" id="icc13">
-						<div class="check-btn" data-val="+2"><span class="title">Leucemia</span></div>
-					</label>
-                    <label class="check-tri" for="icc14">
-						<input type="checkbox" class="check-act" value="2" id="icc14">
-						<div class="check-btn" data-val="+2"><span class="title">Linfoma</span></div>
-					</label>
-                    <label class="check-tri" for="icc15">
-						<input type="checkbox" class="check-act" value="6" id="icc15">
-						<div class="check-btn" data-val="+6"><span class="title">SIDA</span></div>
-					</label>
-                    <label class="check-tri" for="icc16">
-						<input type="checkbox" class="check-act" value="2" id="icc16">
-						<div class="check-btn" data-val="+2"><span class="title">Tumor maligno</span></div>
-					</label>
-                    <label class="check-tri" for="icc17">
-						<input type="checkbox" class="check-act" value="6" id="icc17">
-						<div class="check-btn" data-val="+6"><span class="title">Tumor sólido metastático</span></div>
-					</label>
-                    <label class="check-tri" for="icc18">
-						<input type="checkbox" class="check-act" value="1" id="icc18">
-						<div class="check-btn" data-val="+1"><span class="title">Úlcera gastroduodenal</span></div>
+						<input type="checkbox" class="check-act" value="4" id="icc2">
+						<div class="check-btn" data-val="+4"><span class="title">Pacientes com expectativa de sobrevida inferior a um ano</span></div>
 					</label>
                 </section>
             </div>
@@ -429,80 +368,51 @@
         <div class="row phone-only">
             <div>
                 <div class="item-title-sticky item-title-sticky--phone-only">
-                    <span class="item-title">CFS - <i>Clinical Frailtv Scale</i></span>
+                    <span class="item-title">ECOG - <i>Eastern Cooperative Oncology Group</i></span>
                     <span class="item-subtitle">* Só deve ser aplicada para doentes com idade igual ou superior a 60 anos.</span>
                 </div>
             </div>
             <div>
-                <section class="check-group" id="serializeCFS">
-                    <!-- 					<label for="cfs0" class="check-tri">
-						<input id="cfs0" type="radio" name="cfs" value="0">
-						<div class="check-btn">
-							<span class="title">-</span>
-						</div>
-					</label> -->
-                    <label for="cfs1" class="check-tri">
-						<input id="cfs1" type="radio" name="cfs" value="1">
-						<div class="check-btn check-btn--cfs" data-val="+1">
-							<span class="img-cfs icon-cfs1"></span>
-							<span class="title">Muito ativo</span>
-							<span class="desc-big">Pessoas que estão robustas, ativas, com energia e motivadas. Essas pessoas normalmente se exercitam regularmente. Elas estão entre as mais ativas para sua idade.</span>
+                <section class="check-group" id="serializeECOG">
+                 
+                    <label for="ECOG0" class="check-tri">
+						<input id="ECOG0" type="radio" name="ECOG" value="0">
+						<div class="check-btn check-btn--ECOG" data-val="+0">
+							<span class="img-ECOG icon-ECOG0"></span>
+							<span class="title">Completamente ativo</span>
+							<span class="desc-big"> Pessoa capaz de realizar todas as suas atividades sem restrição (Karnofsky 90-100 %) </span>
 						</div>
 					</label>
-                    <label for="cfs2" class="check-tri">
-						<input id="cfs2" type="radio" name="cfs" value="2">
-						<div class="check-btn check-btn--cfs" data-val="+2">
-							<span class="img-cfs icon-cfs2"></span>
-							<span class="title">Ativo</span>
-							<span class="desc-big">Pessoas que não apresentam nenhum sintoma ativo de doença, mas estão menos ativas que as da categoria I. Frequentemente se exercitam ou não são muito ativas ocasionalmente, exemplo: em determinada época do ano.</span>
+                    <label for="ECOG1" class="check-tri">
+						<input id="ECOG1" type="radio" name="ECOG" value="1">
+						<div class="check-btn check-btn--ECOG" data-val="+1">
+							<span class="img-ECOG icon-ECOG1"></span>
+							<span class="title">Restrição a atividades físicas rigorosas</span>
+							<span class="desc-big"> Pessoa capaz de trabalhos leves e de natureza sedentária (Karnofsky 70-80%)</span>
 						</div>
 					</label>
-                    <label for="cfs3" class="check-tri">
-						<input id="cfs3" type="radio" name="cfs" value="3">
-						<div class="check-btn check-btn--cfs" data-val="+3">
-							<span class="img-cfs icon-cfs3"></span>
-							<span class="title">Regular</span>
-							<span class="desc-big">Pessoas com problemas de saúde bem controlados, mas não se exercitam regularmente além da caminhada de rotina.</span>
+                    <label for="ECOG2" class="check-tri">
+						<input id="ECOG2" type="radio" name="ECOG" value="2">
+						<div class="check-btn check-btn--ECOG" data-val="+2">
+							<span class="img-ECOG icon-ECOG2"></span>
+							<span class="title">Auto-cuidados</span>
+							<span class="desc-big"> Capaz de realizar todos os auto-cuidados, mas incapaz de realizar qualquer atividade de trabalho em pé aproximadamente 50% das horas em que o paciente está acordado.(Karnofsky 50-60%).</span>
 						</div>
 					</label>
-                    <label for="cfs4" class="check-tri">
-						<input id="cfs4" type="radio" name="cfs" value="4">
-						<div class="check-btn check-btn--cfs" data-val="+4">
-							<span class="img-cfs icon-cfs4"></span>
-							<span class="title">Vulnerável</span>
-							<span class="desc-big">Apesar de não depender dos outros para ajuda diária, frequentemente os sintomas limitam as atividades. Uma queixa comum é sentir-se mais lento e/ou mais cansado ao longo do dia.</span>
+                    <label for="ECOG3" class="check-tri">
+						<input id="ECOG3" type="radio" name="ECOG" value="3">
+						<div class="check-btn check-btn--ECOG" data-val="+3">
+							<span class="img-ECOG icon-ECOG3"></span>
+							<span class="title">Auto-cuidados limitados</span>
+							<span class="desc-big">Capaz de realizar somente auto-cuidados limitados, confinado ao leito ou cadeira mais de 50% das horas em que o paciente está acordado (Karnofsky 30-40%)</span>
 						</div>
 					</label>
-                    <label for="cfs5" class="check-tri">
-						<input id="cfs5" type="radio" name="cfs" value="5">
-						<div class="check-btn check-btn--cfs" data-val="+5">
-							<span class="img-cfs icon-cfs5"></span>
-							<span class="title">Levemente Frágil</span>
-							<span class="desc-big">Estas pessoas frequentemente apresentam lentidão evidente e precisam de ajuda para atividades instrumentais de vida diária (AIVD) mais complexas (finanças, transporte, trabalho doméstico pesado, medicações). Tipicamente, a fragilidade leve progressivamente prejudica as compras e passeios desacompanhados, preparo de refeições e tarefas domésticas.</span>
-						</div>
-					</label>
-                    <label for="cfs6" class="check-tri">
-						<input id="cfs6" type="radio" name="cfs" value="6">
-						<div class="check-btn check-btn--cfs" data-val="+6">
-							<span class="img-cfs icon-cfs6"></span>
-							<span class="title">Moderadamente Frágil</span>
-							<span class="desc-big">Pessoas que precisam de ajuda em todas as atividades externas e na manutenção da casa. Em casa, frequentemente têm dificuldades com escadas e necessitam de ajuda no banho e podem necessitar de ajuda mínima (apoio próximo) para se vestirem.</span>
-						</div>
-					</label>
-                    <label for="cfs7" class="check-tri">
-						<input id="cfs7" type="radio" name="cfs" value="7">
-						<div class="check-btn check-btn--cfs" data-val="+7">
-							<span class="img-cfs icon-cfs7"></span>
-							<span class="title">Muito Frágil</span>
-							<span class="desc-big">Completamente dependentes para cuidados pessoais, por qualquer causa (física ou cognitiva). No entanto, são aparentemente estáveis e sem alto risco de morte (dentro de 6 meses).</span>
-						</div>
-					</label>
-                    <label for="cfs8" class="check-tri">
-						<input id="cfs8" type="radio" name="cfs" value="8">
-						<div class="check-btn check-btn--cfs" data-val="+8">
-							<span class="img-cfs icon-cfs8"></span>
-							<span class="title">Severamente Frágil</span>
-							<span class="desc-big">Completamente dependentes, aproximando-se do fim da vida. Tipicamente incapaz de se recuperarem de uma doença leve.</span>
+                    <label for="ECOG4" class="check-tri">
+						<input id="ECOG4" type="radio" name="ECOG" value="4">
+						<div class="check-btn check-btn--ECOG" data-val="+4">
+							<span class="img-ECOG icon-ECOG4"></span>
+							<span class="title">Completamente incapaz</span>
+							<span class="desc-big">Completamente incapaz de realizar auto-cuidados básico, totalmente confinado ao leito ou à cadeira (Karnofsky < 30%).</span>
 						</div>
 					</label>
                 </section>
@@ -514,8 +424,8 @@
                 <span class="nth2"><span class="somaICC-view pts">0</span></span>
             </div>
             <div class="result-sub-row">
-                <span class="nth1">CFS</span>
-                <span class="nth2"><span class="serializeCFS-view pts">0</span></span>
+                <span class="nth1">ECOG</span>
+                <span class="nth2"><span class="serializeECOG-view pts">0</span></span>
             </div>
         </div>
     </section>
@@ -582,10 +492,10 @@
                 </span>
             </div>
             <div class="result-row">
-                <span class="nth1">ICC ou CFS</span>
+                <span class="nth1">ICC ou ECOG</span>
                 <span class="nth2">
-					<span class="view-result-eup-icccfs pts">0</span>
-                <span class="view-result-icccfs small"></span>
+					<span class="view-result-eup-iccECOG pts">0</span>
+                <span class="view-result-iccECOG small"></span>
                 </span>
             </div>
             <div class="result-row">
@@ -629,25 +539,25 @@
                     <tr>
                         <td>ICC 0-1</td>
                         <td>ou</td>
-                        <td>CFS&lt;4</td>
+                        <td>ECOG&lt;4</td>
                         <td>(1 ponto)</td>
                     </tr>
                     <tr>
                         <td>ICC 2</td>
                         <td>ou</td>
-                        <td>CFS=4</td>
+                        <td>ECOG=4</td>
                         <td>(2 pontos)</td>
                     </tr>
                     <tr>
                         <td>ICC 3-5</td>
                         <td>ou</td>
-                        <td>CFS 5 e 6</td>
+                        <td>ECOG 5 e 6</td>
                         <td>(3 pontos)</td>
                     </tr>
                     <tr>
                         <td>ICC&gt;5</td>
                         <td>ou</td>
-                        <td>CFS 7 e 8</td>
+                        <td>ECOG 7 e 8</td>
                         <td>(4 pontos)</td>
                     </tr>
                 </tbody>

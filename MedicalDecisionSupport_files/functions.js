@@ -12,9 +12,9 @@ $('#somaICC-trigger label').each(function(){
 var config = {
 	storage: false,
 	sofa: 0,
-	icccfs: {
+	iccECOG: {
 		icc: 0,
-		cfs: 0,
+		ECOG: 0,
 		maiorVal: 0,
 		maiorName: ''
 	},
@@ -79,38 +79,38 @@ function calcEUP(){
 	if(config.storage){
 		var sofa 	= (getStorage('sofa') !== null) ? getStorage('sofa') : 0;
 		var icc 	= (getStorage('icc') !== null) ? getStorage('icc') : 0;
-		var cfs 	= (getStorage('cfs') !== null) ? getStorage('cfs') : 0;
+		var ECOG 	= (getStorage('ECOG') !== null) ? getStorage('ECOG') : 0;
 		var kps 	= (getStorage('kps') !== null) ? getStorage('kps') : 0;
 	}else{
 		var sofa 	= config.sofa;
-		var icc 	= config.icccfs.icc;
-		var cfs 	= config.icccfs.cfs;
+		var icc 	= config.iccECOG.icc;
+		var ECOG 	= config.iccECOG.ECOG;
 		var kps 	= config.kps;
 	}
 
 	var eup_sofa = (sofa<6 & sofa>=0)  ? 1 : (sofa>=6 & sofa<=9) ? 2 : (sofa>=10 & sofa<=12) ? 3 : (sofa>12) ? 4 : 0;
 	var eup_icc = (icc==1 & icc>=0) ? 1 : (icc==2) ? 2 : (icc>=3 & icc<=5) ?  3 : (icc>5) ? 4 : 0;
-	var eup_cfs = (cfs<4 & cfs>=0) ? 1 : (cfs==4) ? 2 : (cfs==5 | cfs==6) ?  3 : (cfs==7 | cfs==8) ? 4 : 0;
+	var eup_ECOG = (ECOG<4 & ECOG>=0) ? 1 : (ECOG==4) ? 2 : (ECOG==5 | ECOG==6) ?  3 : (ECOG==7 | ECOG==8) ? 4 : 0;
 	var eup_kps = (kps==0) ? 1 : kps;
 
-	var icccfs_maiorVal = (eup_icc > eup_cfs ? eup_icc : eup_cfs);
-	var icccfs_maiorName = (eup_icc > eup_cfs ? 'ICC' : 'CFS');
-	//addStorage('icccfsVal',icccfs_maiorVal);
-	//addStorage('icccfsName',icccfs_maiorName);
-	//config.icccfs.maiorVal = icccfs_maiorVal;
-	//config.icccfs.maiorName = icccfs_maiorName;
+	var iccECOG_maiorVal = (eup_icc > eup_ECOG ? eup_icc : eup_ECOG);
+	var iccECOG_maiorName = (eup_icc > eup_ECOG ? 'ICC' : 'ECOG');
+	//addStorage('iccECOGVal',iccECOG_maiorVal);
+	//addStorage('iccECOGName',iccECOG_maiorName);
+	//config.iccECOG.maiorVal = iccECOG_maiorVal;
+	//config.iccECOG.maiorName = iccECOG_maiorName;
 	//if(sofa){
 		$('.view-result-sofa').html('('+sofa+' pontos SOFA)');
 		$('.view-result-kps').html(eup_kps);
 	//}
-	//if(icccfs_maiorVal){
-		$('.view-result-icccfs').html('('+(icccfs_maiorName=='ICC'?icc:cfs)+' pontos '+icccfs_maiorName+')');
+	//if(iccECOG_maiorVal){
+		$('.view-result-iccECOG').html('('+(iccECOG_maiorName=='ICC'?icc:ECOG)+' pontos '+iccECOG_maiorName+')');
 	//}
 	$('.view-result-eup-sofa').html(eup_sofa);
-	$('.view-result-eup-icccfs').html(icccfs_maiorVal);
+	$('.view-result-eup-iccECOG').html(iccECOG_maiorVal);
 
 
-	var eup = parseInt(eup_sofa) + parseInt(icccfs_maiorVal) + parseInt(eup_kps);
+	var eup = parseInt(eup_sofa) + parseInt(iccECOG_maiorVal) + parseInt(eup_kps);
 	addStorage('eup',eup);
 	config.eup = eup;
 
@@ -136,16 +136,16 @@ $('#somaICC-trigger .check-act').on('click',function(){
  	$('.somaICC-view').html(icc);
  	
  	addStorage('icc', icc);
-	config.icccfs.icc = icc;
+	config.iccECOG.icc = icc;
 	calcEUP();
 });
 
-$('#serializeCFS input[type=radio]').on('click',function(){
- 	var cfs = $(this).val();
- 	$('.serializeCFS-view').html(cfs);
+$('#serializeECOG input[type=radio]').on('click',function(){
+ 	var ECOG = $(this).val();
+ 	$('.serializeECOG-view').html(ECOG);
 
- 	addStorage('cfs',cfs);
- 	config.icccfs.cfs = cfs;
+ 	addStorage('ECOG',ECOG);
+ 	config.iccECOG.ECOG = ECOG;
 	calcEUP();
 });
 
