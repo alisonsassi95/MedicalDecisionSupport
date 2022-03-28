@@ -146,7 +146,7 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1
 # quando logar, entrar nesse caminho.
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/Dashboard'
 #Lembrar da sessão
 ACCOUNT_SESSION_REMEMBER = True
 #importando o template cryspy
