@@ -10,12 +10,10 @@ from xml.dom.minidom import Identified
 
 class PersonalData:
 
-    def personDataExternal(typeData, peoplePrevious):
+    def personDataExternal(typeData):
         # Find file extern
-        
         # Aqui tem um problema, está randomizando a cada iteração. 
         # Mas a pessoal deve ser a mesma nome e sexo.
-
         peopleRandom = random.randint(2,100728)
 
         with open('data_name_sex.csv', encoding='utf-8') as referenceFile:
@@ -31,14 +29,17 @@ class PersonalData:
         if(typeData == 'gender'):
             return gender
 
+    def id(IdRange):
+        return range(IdRange)
+
     def patient():
-        return PersonalData.personDataExternal('patient',0)
+        return PersonalData.personDataExternal('patient')
 
     def age():
         return random.randint(10,95)
         
     def gender():
-        return PersonalData.personDataExternal('gender',1)
+        return PersonalData.personDataExternal('gender')
 
 
 # Parte do CSV: Previsão de sobrevivência a curto prazo					
@@ -65,7 +66,10 @@ class ShortLifeForecast:
 
 # Parte do CSV: Previsão de sobrevivência a longo prazo
 # Gerar dados 2 OU 4 pontos para preencher a coluna ICC;
+    #Pacientes com expectativa de sobrevida inferior a cinco anos = 2
+    #Pacientes com expectativa de sobrevida inferior a um ano = 4
 # Gerar dados 2 OU 4 pontos para preencher a coluna ECOG;
+
 class LongLifeForecast:
     def ICC():
         return random.randrange(2, 5, 2)
@@ -103,7 +107,8 @@ def printRegister():
         print(registro,end='')
     #---------------------------------------------------------------------------------
 
-def generateRegister():
+def generateRegister(idPerson):
+    Id = PersonalData.id(idPerson)
     patient = PersonalData.patient()
     age = PersonalData.age()
     gender = PersonalData.gender()
@@ -116,19 +121,19 @@ def generateRegister():
     icc = LongLifeForecast.ICC()
     ecog = LongLifeForecast.ECOG()
     
-    concatenationPersonalData = "%s,%s,%s" % (str(patient), str(age),str(gender))
+    concatenationPersonalData = "%s,%s,%s,%s" % (str(Id), str(patient), str(age),str(gender))
     concatenationShortLifeForecast = "%s,%s,%s,%s,%s,%s" % (str(neurological), str(cardiovascular),str(respiratory),str(coagulation),str(hepatic),str(renal))
     concatenationLongLifeForecast = "%s,%s" % (str(icc), str(ecog))
     concatenation = "%s,%s,%s" % (str(concatenationPersonalData), str(concatenationShortLifeForecast),str(concatenationLongLifeForecast))
     return concatenation
 
-def insertOneRegisterInFile():
+def insertOneRegisterInFile(numRegister):
     #Adiciona um registro no arquivo csv
     arq = open('data.csv','r')
     arq.close()
     arq = open('data.csv','a')
     arq.write('\n')
-    dataGenerateRegister = generateRegister()
+    dataGenerateRegister = generateRegister(numRegister)
     arq.write(dataGenerateRegister)
     arq.close()
 
@@ -136,7 +141,7 @@ def insertOneRegisterInFile():
 def createFile():
     #Cria um arquivo csv
     arq = open('data.csv','w')
-    arq.write('PATIENT,AGE,GENDER,NEUROLOGICAL,CARDIOVASCULAR,RESPIRATORY,COAGULATION,HEPATIC,RENAL,ICC,ECOG')
+    arq.write('ID,PATIENT,AGE,GENDER,NEUROLOGICAL,CARDIOVASCULAR,RESPIRATORY,COAGULATION,HEPATIC,RENAL,ICC,ECOG')
     arq.close()
 
 # Main Program
@@ -146,7 +151,7 @@ if not (exist):
 
 counter = 0
 while counter < 100:
-  insertOneRegisterInFile()
+  insertOneRegisterInFile(counter)
   counter += 1
 
 printRegister()
