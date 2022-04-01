@@ -1,7 +1,6 @@
 import os
 import csv
 import random
-from xml.dom.minidom import Identified
 
 # Parte do CSV: Dados Pessoais
 # Ler o arquivo "nome" coluna 1 para preencher a coluna Paciente;
@@ -12,25 +11,30 @@ class PersonalData:
 
     def personDataExternal(typeData):
         # Find file extern
+
+        # ------------------------------------------------------------------------------------------------------------
         # Aqui tem um problema, está randomizando a cada iteração. 
-        # Mas a pessoal deve ser a mesma nome e sexo.
+        # Mas a pessoa deve ser a mesma nome do sexo.
+        
         peopleRandom = random.randint(2,100728)
 
         with open('data_name_sex.csv', encoding='utf-8') as referenceFile:
             readFile = csv.reader(referenceFile, delimiter=',')
-            print()
+            
             for table in readFile:
                 if(readFile.line_num == peopleRandom):
                     name = table[0]
                     gender = table[1]
         
         if(typeData == 'patient'):
+
             return name
         if(typeData == 'gender'):
             return gender
 
-    def id(IdRange):
-        return range(IdRange)
+    def id():
+        numberLines = sum( 1 for line in open('data.csv'))
+        return numberLines
 
     def patient():
         return PersonalData.personDataExternal('patient')
@@ -107,8 +111,8 @@ def printRegister():
         print(registro,end='')
     #---------------------------------------------------------------------------------
 
-def generateRegister(idPerson):
-    Id = PersonalData.id(idPerson)
+def generateRegister():
+    Id = PersonalData.id()
     patient = PersonalData.patient()
     age = PersonalData.age()
     gender = PersonalData.gender()
@@ -127,13 +131,10 @@ def generateRegister(idPerson):
     concatenation = "%s,%s,%s" % (str(concatenationPersonalData), str(concatenationShortLifeForecast),str(concatenationLongLifeForecast))
     return concatenation
 
-def insertOneRegisterInFile(numRegister):
-    #Adiciona um registro no arquivo csv
-    arq = open('data.csv','r')
-    arq.close()
+def insertOneRegisterInFile():
     arq = open('data.csv','a')
     arq.write('\n')
-    dataGenerateRegister = generateRegister(numRegister)
+    dataGenerateRegister = generateRegister()
     arq.write(dataGenerateRegister)
     arq.close()
 
@@ -150,8 +151,8 @@ if not (exist):
     createFile()
 
 counter = 0
-while counter < 100:
-  insertOneRegisterInFile(counter)
+while counter < 8:
+  insertOneRegisterInFile()
   counter += 1
 
 printRegister()
