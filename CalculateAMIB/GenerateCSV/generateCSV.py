@@ -151,7 +151,7 @@ if not (exist):
     createFile()
 
 counter = 0
-while counter < 8:
+while counter < 25:
   insertOneRegisterInFile()
   counter += 1
 

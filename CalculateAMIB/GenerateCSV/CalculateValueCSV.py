@@ -1,3 +1,4 @@
+from email import header
 import os
 import csv
 
@@ -33,11 +34,11 @@ def calculateTotal(SOFA, ICC, AGE):
 
         if AGE <= 49:
             scorePointAgeGroup = 1
-        if AGE >= 50 and AGE <= 69:
+        elif AGE >= 50 and AGE <= 69:
             scorePointAgeGroup = 2    
-        if AGE >= 70 and AGE <= 84:
+        elif AGE >= 70 and AGE <= 84:
             scorePointAgeGroup = 3
-        if AGE >= 85:
+        elif AGE >= 85:
             scorePointAgeGroup = 4
         else:
             print("the scorePointAgeGroup with problem")
@@ -60,6 +61,7 @@ def calculateFragility(ECOG):
     return scoreFragility
 
 def calculateSOFA(NEUROLOGICAL,CARDIOVASCULAR,RESPIRATORY,COAGULATION,HEPATIC,RENAL):
+
     scoreCalculateSOFA = (
         int(NEUROLOGICAL) + 
         int(CARDIOVASCULAR) +
@@ -67,30 +69,40 @@ def calculateSOFA(NEUROLOGICAL,CARDIOVASCULAR,RESPIRATORY,COAGULATION,HEPATIC,RE
         int(COAGULATION) +
         int(HEPATIC) +
         int(RENAL))
+
     return scoreCalculateSOFA
 
-def MinorTotal():
-    # ler da base de dados
-    return
+def toListCSV(DATA_LIST):
+    data = []
+    data.append(str(list(DATA_LIST.keys())).replace("'","").replace("[","").replace("]",""))
+    DataCSV = str(data).replace("'","").replace("[","").replace("]","")
+    
+    return DataCSV
 
-def insertDataCalculateCSV(HEADER_FILE, DATA_FILE):
-    #field_names = ['No', 'Company', 'Car Model'] 
-    #cars = [ 
-    #{'No': 1, 'Company': 'Ferrari', 'Car Model': '488 GTB'}, 
-    #{'No': 2, 'Company': 'Porsche', 'Car Model': '918 Spyder'}, 
-    #{'No': 3, 'Company': 'Bugatti', 'Car Model': 'La Voiture Noire'}, 
-    #{'No': 4, 'Company': 'Rolls Royce', 'Car Model': 'Phantom'}, 
-    #{'No': 5, 'Company': 'BMW', 'Car Model': 'BMW X7'}, 
-    #] 
+def createFileIfNotExist(Data_Header):
+    NameCSV = 'data_Calculate_AMIB.csv'
+    existFile = os.path.exists(NameCSV)
 
-    with open('data_calculate.csv', 'w') as csvfile: 
-        writer = csv.DictWriter(csvfile, fieldnames = HEADER_FILE) 
-        writer.writeheader() 
-        writer.writerows(DATA_FILE) 
+    if not (existFile):        
+        arq = open(NameCSV,'w')
+        arq.write(Data_Header)
+        arq.close()
+        return True
 
+def insertOneRegisterInFile(DATA_REGISTER):
+
+    arq = open('data_Calculate_AMIB.csv','a')
+    arq.write('\n')
+    arq.write(DATA_REGISTER)
+    arq.close()
+    
     return True
 
+
+
+
 # Main Program
+
 existFile = os.path.exists('data.csv')
 if not (existFile):
     print("Arquivo CSV nao existe.")
@@ -100,9 +112,10 @@ if not (existFile):
 
 with open("data.CSV") as fileCSV:
     readingCSV = csv.DictReader(fileCSV, delimiter=",")
-    listData=[]
-    listHeader =[]
+    ValuesCalculateTotal = []
+
     for line in readingCSV:
+
         scoreSOFA = calculateSOFA(
                                   NEUROLOGICAL=line.get("NEUROLOGICAL"),
                                   CARDIOVASCULAR=line.get("CARDIOVASCULAR"),
@@ -111,34 +124,42 @@ with open("data.CSV") as fileCSV:
                                   HEPATIC=line.get("HEPATIC"),
                                   RENAL=line.get("RENAL")
                                   )
-        line['SCORE_SOFA'] = scoreSOFA
+
+        
+        line['3SCORE_SOFA'] = scoreSOFA
         scoreFragility = calculateFragility(line.get("ECOG"))
-        line['SCORE_FRAGILITY'] = scoreFragility
+        line['2SCORE_FRAGILITY'] = scoreFragility
         scoreTotal = calculateTotal(SOFA= int(scoreSOFA), ICC= int(line.get("ICC")), AGE= int(line.get("AGE")) )
-        line['CALCULATE_TOTAL'] = scoreTotal
+        line['1CALCULATE_TOTAL'] = scoreTotal
 
-        listData.append(line.values())
-    listHeader.append(line.keys())
-    print(list(listHeader))
-    print("-----------------")
-    print(listData)
+        ValuesCalculateTotal.append(line.get("1CALCULATE_TOTAL"))
     
-#print(list(line.keys())[1])
-#print(list(line.keys()))
-#print(line.values())
-
-insertDataCalculateCSV(list(listHeader), list(listData))
+    print(ValuesCalculateTotal)
+    a = sorted(int(list(ValuesCalculateTotal)), key=lambda x: x[1])    
+    print(a)
 
 
 
+    
+    
+    ValuesScoreFragility = []
 
-#Passo 1 Preciso saber o menor total 
-# Tem empate?
-#Passo 2 Preciso saber o menor Fragilidade
-# Tem empate?
-#Passo 3 Preciso saber o menor SOFA
-# Tem empate?
-# vamos ver.....
-
-
-
+    ValuesScoreSOFA = []
+    
+        #Passo 1 Preciso saber o menor total 
+        # Tem empate?
+        #Passo 2 Preciso saber o menor Fragilidade
+        # Tem empate?
+        #Passo 3 Preciso saber o menor SOFA
+        # Tem empate?
+        # vamos ver.....
+        
+"""
+        # Jogar para dentro do arquivo CSV.
+        # Atribuir o cabeçalho novo
+        headerCSV = toListCSV(line)
+        createFileIfNotExist(headerCSV)
+        # Atribuir os registros novos
+        registerCSV = str(list(line.values())).replace("'","").replace("[","").replace("]","")
+        insertOneRegisterInFile(registerCSV)
+"""    
