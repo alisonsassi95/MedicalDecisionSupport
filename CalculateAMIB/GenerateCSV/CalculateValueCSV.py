@@ -1,4 +1,4 @@
-from email import header
+
 import os
 import csv
 
@@ -99,8 +99,6 @@ def insertOneRegisterInFile(DATA_REGISTER):
     return True
 
 
-
-
 # Main Program
 
 existFile = os.path.exists('data.csv')
@@ -134,11 +132,11 @@ with open("data.CSV") as fileCSV:
 
         ValuesCalculateTotal.append(line.get("1CALCULATE_TOTAL"))
     
-    print(ValuesCalculateTotal)
-    a = sorted(int(list(ValuesCalculateTotal)), key=lambda x: x[1])    
-    print(a)
+   # print(ValuesCalculateTotal)
+    #a = sorted(int(list(ValuesCalculateTotal)), key=lambda x: x[1])    
+    #print(a)
 
-
+    createFileIfNotExist()
 
     
     

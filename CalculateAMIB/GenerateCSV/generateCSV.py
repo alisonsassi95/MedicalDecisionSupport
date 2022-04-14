@@ -9,7 +9,7 @@ import random
 
 class PersonalData:
 
-    def personDataExternal(typeData):
+    def personDataExternal():
         # Find file extern
 
         # ------------------------------------------------------------------------------------------------------------
@@ -25,34 +25,18 @@ class PersonalData:
                 if(readFile.line_num == peopleRandom):
                     name = table[0]
                     gender = table[1]
-        
-        if(typeData == 'patient'):
-
-            return name
-        if(typeData == 'gender'):
-            return gender
+        return name
 
     def id():
         numberLines = sum( 1 for line in open('data.csv'))
         return numberLines
 
     def patient():
-        return PersonalData.personDataExternal('patient')
+        return PersonalData.personDataExternal()
 
     def age():
         return random.randint(10,95)
-        
-    def gender():
-        return PersonalData.personDataExternal('gender')
 
-
-# Parte do CSV: Previsão de sobrevivência a curto prazo					
-# Gerar dados entre 0 e 4 para preencher a coluna NEUROLOGICAL;
-# Gerar dados entre 0 e 4 para preencher a coluna CARDIOVASCULAR;
-# Gerar dados entre 0 e 4 para preencher a coluna RESPIRATORY;
-# Gerar dados entre 0 e 4 para preencher a coluna COAGULATION;
-# Gerar dados entre 0 e 4 para preencher a coluna HEPATIC;
-# Gerar dados entre 0 e 4 para preencher a coluna RENAL;
 class ShortLifeForecast:
     def neurological():
         return random.randint(0,4)
@@ -142,7 +126,7 @@ def insertOneRegisterInFile():
 def createFile():
     #Cria um arquivo csv
     arq = open('data.csv','w')
-    arq.write('ID,PATIENT,AGE,GENDER,NEUROLOGICAL,CARDIOVASCULAR,RESPIRATORY,COAGULATION,HEPATIC,RENAL,ICC,ECOG')
+    arq.write('ID,PATIENT,AGE,NEUROLOGICAL,CARDIOVASCULAR,RESPIRATORY,COAGULATION,HEPATIC,RENAL,ICC,ECOG')
     arq.close()
 
 # Main Program
@@ -151,7 +135,7 @@ if not (exist):
     createFile()
 
 counter = 0
-while counter < 25:
+while counter < 1000:
   insertOneRegisterInFile()
   counter += 1
 
