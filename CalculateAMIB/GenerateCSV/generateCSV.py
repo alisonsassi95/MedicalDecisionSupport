@@ -24,7 +24,6 @@ class PersonalData:
             for table in readFile:
                 if(readFile.line_num == peopleRandom):
                     name = table[0]
-                    gender = table[1]
         return name
 
     def id():
@@ -99,7 +98,6 @@ def generateRegister():
     Id = PersonalData.id()
     patient = PersonalData.patient()
     age = PersonalData.age()
-    gender = PersonalData.gender()
     neurological = ShortLifeForecast.neurological()
     cardiovascular = ShortLifeForecast.cardiovascular()
     respiratory = ShortLifeForecast.respiratory()
@@ -109,7 +107,7 @@ def generateRegister():
     icc = LongLifeForecast.ICC()
     ecog = LongLifeForecast.ECOG()
     
-    concatenationPersonalData = "%s,%s,%s,%s" % (str(Id), str(patient), str(age),str(gender))
+    concatenationPersonalData = "%s,%s,%s" % (str(Id), str(patient), str(age))
     concatenationShortLifeForecast = "%s,%s,%s,%s,%s,%s" % (str(neurological), str(cardiovascular),str(respiratory),str(coagulation),str(hepatic),str(renal))
     concatenationLongLifeForecast = "%s,%s" % (str(icc), str(ecog))
     concatenation = "%s,%s,%s" % (str(concatenationPersonalData), str(concatenationShortLifeForecast),str(concatenationLongLifeForecast))

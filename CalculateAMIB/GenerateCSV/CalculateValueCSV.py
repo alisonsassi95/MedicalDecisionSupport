@@ -74,7 +74,7 @@ def calculateSOFA(NEUROLOGICAL,CARDIOVASCULAR,RESPIRATORY,COAGULATION,HEPATIC,RE
 
 def toListCSV(DATA_LIST):
     data = []
-    data.append(str(list(DATA_LIST.keys())).replace("'","").replace("[","").replace("]",""))
+    data.append(str(list(DATA_LIST.values())).replace("'","").replace("[","").replace("]",""))
     DataCSV = str(data).replace("'","").replace("[","").replace("]","")
     
     return DataCSV
@@ -93,6 +93,8 @@ def insertOneRegisterInFile(DATA_REGISTER):
 
     arq = open('data_Calculate_AMIB.csv','a')
     arq.write('\n')
+    print('Data register')
+    print(DATA_REGISTER)
     arq.write(DATA_REGISTER)
     arq.close()
     
@@ -106,7 +108,7 @@ if not (existFile):
     print("Arquivo CSV nao existe.")
     exit()
 
-
+createFileIfNotExist('ID,PATIENT,AGE,NEUROLOGICAL,CARDIOVASCULAR,RESPIRATORY,COAGULATION,HEPATIC,RENAL,ICC,ECOG,3SCORE_SOFA,2SCORE_FRAGILITY,1CALCULATE_TOTAL')
 
 with open("data.CSV") as fileCSV:
     readingCSV = csv.DictReader(fileCSV, delimiter=",")
@@ -122,42 +124,11 @@ with open("data.CSV") as fileCSV:
                                   HEPATIC=line.get("HEPATIC"),
                                   RENAL=line.get("RENAL")
                                   )
-
         
         line['3SCORE_SOFA'] = scoreSOFA
         scoreFragility = calculateFragility(line.get("ECOG"))
         line['2SCORE_FRAGILITY'] = scoreFragility
         scoreTotal = calculateTotal(SOFA= int(scoreSOFA), ICC= int(line.get("ICC")), AGE= int(line.get("AGE")) )
         line['1CALCULATE_TOTAL'] = scoreTotal
-
-        ValuesCalculateTotal.append(line.get("1CALCULATE_TOTAL"))
-    
-   # print(ValuesCalculateTotal)
-    #a = sorted(int(list(ValuesCalculateTotal)), key=lambda x: x[1])    
-    #print(a)
-
-    createFileIfNotExist()
-
-    
-    
-    ValuesScoreFragility = []
-
-    ValuesScoreSOFA = []
-    
-        #Passo 1 Preciso saber o menor total 
-        # Tem empate?
-        #Passo 2 Preciso saber o menor Fragilidade
-        # Tem empate?
-        #Passo 3 Preciso saber o menor SOFA
-        # Tem empate?
-        # vamos ver.....
         
-"""
-        # Jogar para dentro do arquivo CSV.
-        # Atribuir o cabeçalho novo
-        headerCSV = toListCSV(line)
-        createFileIfNotExist(headerCSV)
-        # Atribuir os registros novos
-        registerCSV = str(list(line.values())).replace("'","").replace("[","").replace("]","")
-        insertOneRegisterInFile(registerCSV)
-"""    
+        insertOneRegisterInFile(toListCSV(line))
