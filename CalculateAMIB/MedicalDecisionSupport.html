@@ -65,16 +65,6 @@
             <div><label for="idade">Idade:</label></div>
             <div><input type="text" id="idade" name="idade"></div>
         </div>
-        <div class="row">
-            <div><label for="sexo">Sexo:</label></div>
-            <div>
-                <select id="sexo">
-                <option value="">-</option>
-                <option value="0">Feminino</option>
-                <option value="1">Masculino</option>
-                </select>
-            </div>
-        </div>
     </section>
 
     <section class="section" id="somaSOFA-trigger">
@@ -429,55 +419,6 @@
             </div>
         </div>
     </section>
-    <section class="section">
-        <h2>3. Previsão de sobrevivência global e de resposta terapêutica, <span>analisada pelo <i>Karnofsky Performance Status</i> KPS (adaptado).</span></h2>
-        <div class="row">
-            <div>
-                <div class="item-title-sticky">
-                    <span class="item-title">KPS</span>
-                    <span class="item-subtitle"><i>Karnofsky Performance Status</i></span>
-                </div>
-            </div>
-            <div>
-                <section class="check-group" id="serializeKPS">
-                    <label for="kp1" class="check-tri">
-						<input id="kp1" type="radio" name="kps" value="1">
-						<div class="check-btn" data-val="+1">
-							<span class="title">Com ou sem doença crônica, consegue trabalhar normalmente</span>
-							<span class="desc-fade">KPS 100%</span>
-						</div>
-					</label>
-                    <label for="kp2" class="check-tri">
-						<input id="kp2" type="radio" name="kps" value="2">
-						<div class="check-btn" data-val="+2">
-							<span class="title">Com doença crônica, consegue trabalhar apesar de ter sintomas</span>
-							<span class="desc-fade">KPS 80-90%</span>
-						</div>
-					</label>
-                    <label for="kp3" class="check-tri">
-						<input id="kp3" type="radio" name="kps" value="3">
-						<div class="check-btn" data-val="+3">
-							<span class="title">Não consegue trabalhar mas mantém hobbies e autocuidado</span>
-							<span class="desc-fade">KPS 50-60-70%</span>
-						</div>
-					</label>
-                    <label for="kp4" class="check-tri">
-						<input id="kp4" type="radio" name="kps" value="4">
-						<div class="check-btn" data-val="+4">
-							<span class="title">É incapaz de cuidar de si mesmo</span>
-							<span class="desc-fade">KPS 10-20-30-40%</span>
-						</div>
-					</label>
-                </section>
-            </div>
-        </div>
-        <div class="result-sub">
-            <div class="result-sub-row">
-                <span class="nth1">KPS</span>
-                <span class="nth2"><span class="serializeKPS-view pts">0</span></span>
-            </div>
-        </div>
-    </section>
     <section class="section result-sticky">
         <div class="result">
             <div class="result-row result-enfase">
@@ -502,91 +443,6 @@
                 <span class="nth1">KPS</span>
                 <span class="nth2"><span class="view-result-kps pts">0</span></span>
             </div>
-        </div>
-    </section>
-    <section class="section">
-        <div class="box">
-            <div class="box-title">Fórmula</div>
-            <div class="box-question">1. Previsão de sobrevivência a curto prazo, determinado o <i>Sequential Organ Failure Assessment</i> - SOFA (simplificado).</div>
-            <!-- table>tbody>tr(td+td+td)*4 -->
-            <table>
-                <tbody>
-                    <tr>
-                        <td>SOFA Simplificado</td>
-                        <td>&lt;6</td>
-                        <td>(1 ponto)</td>
-                    </tr>
-                    <tr>
-                        <td>SOFA Simplificado</td>
-                        <td>6-9</td>
-                        <td>(2 pontos)</td>
-                    </tr>
-                    <tr>
-                        <td>SOFA Simplificado</td>
-                        <td>10-12</td>
-                        <td>(3 pontos)</td>
-                    </tr>
-                    <tr>
-                        <td>SOFA Simplificado</td>
-                        <td>&gt;12</td>
-                        <td>(4 pontos)</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="box-question">2. Previsão de sobrevivência a longo prazo, avaliado pela presença de comorbidades (pelo Índice de Comorbidades de Charlson) e/ou Fragilidade (pela <i>Clinical Frailtv Scale</i>).</div>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>ICC 0-1</td>
-                        <td>ou</td>
-                        <td>ECOG&lt;4</td>
-                        <td>(1 ponto)</td>
-                    </tr>
-                    <tr>
-                        <td>ICC 2</td>
-                        <td>ou</td>
-                        <td>ECOG=4</td>
-                        <td>(2 pontos)</td>
-                    </tr>
-                    <tr>
-                        <td>ICC 3-5</td>
-                        <td>ou</td>
-                        <td>ECOG 5 e 6</td>
-                        <td>(3 pontos)</td>
-                    </tr>
-                    <tr>
-                        <td>ICC&gt;5</td>
-                        <td>ou</td>
-                        <td>ECOG 7 e 8</td>
-                        <td>(4 pontos)</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="box-question">3. Previsão de sobrevivência global e de resposta terapêutica, analisada pelo <i>Karnofsky Performance Status</i> KPS (adaptado).</div>
-            <table>
-                <tbody>
-                    <tr>
-                        <td style="width: 250px;">Com ou sem doença crônica, consegue trabalhar normalmente</td>
-                        <td>KPS 100%</td>
-                        <td>(1 ponto)</td>
-                    </tr>
-                    <tr>
-                        <td>Com doença crônica, consegue trabalhar apesar de ter sintomas</td>
-                        <td>KPS 80-90%</td>
-                        <td>(2 pontos)</td>
-                    </tr>
-                    <tr>
-                        <td>Não consegue trabalhar mas mantém hobbies e autocuidado</td>
-                        <td>KPS 50-60-70%</td>
-                        <td>(3 pontos)</td>
-                    </tr>
-                    <tr>
-                        <td>É incapaz de cuidar de si mesmo</td>
-                        <td>KPS 10-20-30-40%</td>
-                        <td>(4 pontos)</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </section>
     <script src="./MedicalDecisionSupport_files/jquery-3.3.1.min.js"></script>
