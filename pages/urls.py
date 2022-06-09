@@ -6,4 +6,5 @@ app_name = "pages"
 
 urlpatterns = [
     path("", views.HomePageView.as_view(), name="home"),
+    path("MedicalDecisionSupport", views.MedicalDecisionSupport.as_view(), name="MedicalDecisionSupport"),
 ]

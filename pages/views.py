@@ -6,3 +6,6 @@ class HomePageView(TemplateView):
 
 class Dashboard(TemplateView):
     template_name = "dashboard.html"
+
+class MedicalDecisionSupport(TemplateView):
+    template_name = "MedicalDecisionSupport.html"
