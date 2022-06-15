@@ -32,10 +32,14 @@ INICIALIZAR AMBIENTE
 * Ativar: .\venv\Scripts\activate
 
 * Instalar Django: pip install django
+* Instalar Models-Utils: pip install django-model-utils
 
 * Instalar Pandas: pip install pandas
 
 * Instalar Scikit: pip install -U scikit-learn
+
+Rodar o MakeMigrations:python manage.py makemigrations
+Rodar o Migrate: python manage.py migrate
 
 * Instalar todos os plugins: pip install -r requirements.txt
 

@@ -1,4 +1,5 @@
 from django.db import models
+#from model_utils.models import TimeStampedModel
 
 class DataPatient(models.Model):
     patient = models.CharField(max_length=200)
