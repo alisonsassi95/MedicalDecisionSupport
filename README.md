@@ -19,7 +19,8 @@ INICIALIZAR AMBIENTE
 
 
 Adicione esses comandos abaixo nesse arquivo: "requirements.txt" e salve na raiz ( na mesma pasta do README)
-#BEGIN
+começa aqui:
+
 arabic-reshaper==2.1.3
 argon2-cffi==21.1.0
 asgiref==3.4.1
@@ -95,7 +96,8 @@ traitlets==5.1.1
 urllib3==1.26.6
 wcwidth==0.2.5
 webencodings==0.5.1
-#END
+
+
 Terminou o arquivo, agora só rodar o comando.
 ----------------------------------------------
 
