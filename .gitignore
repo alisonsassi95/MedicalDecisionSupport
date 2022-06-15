@@ -161,6 +161,7 @@ cython_debug/
 
 # VSCode
 .vscode/
+.history/
 
 # File Text
 requirements.txt
