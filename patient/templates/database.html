@@ -11,17 +11,21 @@
             <thead>
                 <tr>
                 <th class='table-success' scope="col">Id</th>
-                <th class='table-success' scope="col">patient</th>
-                <th class='table-success' scope="col">age</th>
-                <th class='table-success' scope="col">neurological</th>
-                <th class='table-success' scope="col">cardiovascular</th>
-                <th class='table-success' scope="col">respiratory</th>
-                <th class='table-success' scope="col">coagulation</th>
-                <th class='table-success' scope="col">hepatic</th>
-                <th class='table-success' scope="col">renal</th>
-                <th class='table-success' scope="col">icc</th>
-                <th class='table-success' scope="col">ecog</th>
-                <th class='table-success' scope="col">classification</th>               
+                <th class='table-success' scope="col">Name Patient</th>
+                <th class='table-success' scope="col">Age</th>
+                <th class='table-success' scope="col">Neurological</th>
+                <th class='table-success' scope="col">Cardiovascular</th>
+                <th class='table-success' scope="col">Respiratory</th>
+                <th class='table-success' scope="col">Coagulation</th>
+                <th class='table-success' scope="col">Hepatic</th>
+                <th class='table-success' scope="col">Renal</th>
+                <th class='table-success' scope="col">ICC</th>
+                <th class='table-success' scope="col">ECOG</th>
+                <th class='table-success' scope="col">Score SOFA</th>
+                <th class='table-success' scope="col">Score Fragility</th>
+                <th class='table-success' scope="col">Score Total</th>
+                <th class='table-success' scope="col">Classification</th>               
+                <th class='table-success' scope="col">Active</th>               
                 </tr>
             </thead>
             <tbody>
@@ -41,7 +45,11 @@
                             <td>{{ data.renal }}</td>
                             <td>{{ data.icc }}</td>
                             <td>{{ data.ecog }}</td>
+                            <td>{{ data.scoreSOFA }}</td>
+                            <td>{{ data.scoreFragility }}</td>
+                            <td>{{ data.scoreTotal }}</td>
                             <td>{{ data.classification }}</td>
+                            <td>{{ data.active }}</td>
 
                         </tr>
 

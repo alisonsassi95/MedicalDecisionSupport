@@ -1,12 +1,11 @@
 import os
-import csv
 import CalculateMDS
 
-NameFileExport = 'data.csv'
+NameFileExport = 'data_Calculate.csv'
 
 def createFile():
     arq = open(NameFileExport,'w') 
-    arq.write('PATIENT,AGE,NEUROLOGICAL,CARDIOVASCULAR,RESPIRATORY,COAGULATION,HEPATIC,RENAL,ICC,ECOG,CALCULATE_MINOR_TOTAL,CALCULATE_FRAGILITY,CALCULATE_SOFA,CLASSIFICATION')
+    arq.write('PATIENT,AGE,NEUROLOGICAL,CARDIOVASCULAR,RESPIRATORY,COAGULATION,HEPATIC,RENAL,ICC,ECOG,SCORE_MINOR_TOTAL,SCORE_FRAGILITY,SCORE_SOFA,CLASSIFICATION')
     arq.close()
 
 def generateRegister():
@@ -76,6 +75,6 @@ if not (exist):
     createFile()
 
 counter = 0
-while counter < 1000:
+while counter < 100:
   insertOneRegisterInFile()
   counter += 1
