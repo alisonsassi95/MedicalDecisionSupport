@@ -12,4 +12,8 @@ class DataPatient(models.Model):
     renal = models.IntegerField()
     icc = models.IntegerField()
     ecog = models.IntegerField()
+    scoreSOFA = models.IntegerField()
+    scoreFragility = models.IntegerField()
+    scoreTotal = models.IntegerField()
     classification = models.IntegerField()
+    active = models.BooleanField()

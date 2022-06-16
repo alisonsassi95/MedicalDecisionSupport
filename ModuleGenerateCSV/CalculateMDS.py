@@ -107,4 +107,5 @@ class CalculateValuesOfPatient:
 
 class CalculateClassification:
     def Classification(SCORE_SOFA, SCORE_FRAGILITY, SCORE_TOTAL):
-        return 1
+        calc = (SCORE_SOFA + SCORE_FRAGILITY + SCORE_TOTAL)
+        return calc
