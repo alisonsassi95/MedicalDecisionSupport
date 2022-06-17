@@ -1,3 +1,4 @@
+
 from django.shortcuts import redirect, render
 import pandas as pd
 from .models import DataPatient
@@ -8,7 +9,19 @@ import random
 def home(request):
     return render(request, 'home.html')
 
+def validation(request):
+    dataPacientReturn = DataPatient.objects.all()
 
+    imageAvatar = [
+        'w-40 avatar gd-warning',
+        'w-40 avatar gd-info',
+        'w-40 avatar gd-success',
+        'w-40 avatar gd-danger',
+        'w-40 avatar gd-primary'
+        ]
+    avatarPatient = random.choice(imageAvatar)
+
+    return render(request, 'validation.html', {'patient':patient,'avatarPatient':imageAvatar,'patient_records': dataPacientReturn})
 
 def patient(request):
     model = pd.read_pickle('Model_MDS.pickle')
@@ -38,8 +51,6 @@ def patient(request):
     icc = request.GET['icc']
     ecog = request.GET['ecog']
     '''
-    print('=----------------------------------------------------------------= ',neurological)
-
 
     scoreSOFA = calculateSOFA(
         NEUROLOGICAL = neurological,
@@ -75,8 +86,6 @@ def patient(request):
     print(list_var)
 
     classification = model.predict([list_var])
-    
-    print('A classificação é ', classification)
 
     DataPatient.objects.create(
         patient=patient,
@@ -93,10 +102,10 @@ def patient(request):
         scoreFragility = scoreFragility,
         scoreTotal = scoreTotal,
         classification=classification[0],
-        active = True
+        active = False
     )
 
-    dataPacientReturn = DataPatient.objects.all()
+    dataPacientReturn = DataPatient.objects.filter(active=True)
 
     return render(request, 'patients.html', {'patient':patient,'patient_records': dataPacientReturn,'classification_result': classification[0]})
 
