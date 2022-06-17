@@ -8,7 +8,8 @@ import random
 def home(request):
     return render(request, 'home.html')
 
-
+def validation(request):
+    return render(request, 'validation.html')
 
 def patient(request):
     model = pd.read_pickle('Model_MDS.pickle')

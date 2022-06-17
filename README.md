@@ -35,7 +35,7 @@ INICIALIZAR AMBIENTE
 * Instalar todos as dependencias: pip install -r requirements.txt
 
 [] Banco de dados:
-* Rodar o MakeMigrations:python manage.py makemigrations
+* Rodar o MakeMigrations: python manage.py makemigrations
 * Rodar o Migrate: python manage.py migrate
 
 [] Iniciar servidor:

@@ -2,68 +2,73 @@
 
 {% block content %}
 
-    <h1 class='text-center text-success mt-4 p-2'> Database</h1>
-    <hr>
+<h1 class='text-center text-success mt-4 p-2'> Todos os dados</h1>
+<hr>
+<nav class="navbar navbar-light bg-light">
+    <form class="form-inline">
+      <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+    </form>
+  </nav>
 
-    <div class='container p-2'>
+<div class="table-responsive">
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Identificador do Paciente">Id</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Nome do Paciente">Nome</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Idade">Idade</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Neurological" >Ne</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Cardiovascular" >Cardio</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Respitatório" >Resp</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Coagulaçao" >Coag</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Hepático" >Hep</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Renal" >Renal</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Índice de Comorbidade de Charlson" >ICC</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Eastern Cooperative Oncology Group" >ECOG</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Cálculo SOFA SOFA" >SOFA</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Cálculo Fragility" >Frag</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="Cálculo Total" >Tot</th>
+                <th class='table-success' scope="col" data-toggle="tooltip" title="classificação" >Clas</th>
+                <th class='table-success' scope="col">Ativo</th>
+            </tr>
+        </thead>
+        <tbody>
 
-            <table class="table p-2 shadow rounded">
-            <thead>
-                <tr>
-                <th class='table-success' scope="col">Id</th>
-                <th class='table-success' scope="col">Name Patient</th>
-                <th class='table-success' scope="col">Age</th>
-                <th class='table-success' scope="col">Neurological</th>
-                <th class='table-success' scope="col">Cardiovascular</th>
-                <th class='table-success' scope="col">Respiratory</th>
-                <th class='table-success' scope="col">Coagulation</th>
-                <th class='table-success' scope="col">Hepatic</th>
-                <th class='table-success' scope="col">Renal</th>
-                <th class='table-success' scope="col">ICC</th>
-                <th class='table-success' scope="col">ECOG</th>
-                <th class='table-success' scope="col">Score SOFA</th>
-                <th class='table-success' scope="col">Score Fragility</th>
-                <th class='table-success' scope="col">Score Total</th>
-                <th class='table-success' scope="col">Classification</th>               
-                <th class='table-success' scope="col">Active</th>               
-                </tr>
-            </thead>
-            <tbody>
+            {% if patient_records %}
 
-                {% if patient_records %}
+            {% for data in patient_records %}
+            <tr>
+                <th scope="row">{{ data.id }}</th>
+                <td>{{ data.patient }}</td>
+                <td>{{ data.age  }}</td>
+                <td>{{ data.neurological }}</td>
+                <td>{{ data.cardiovascular }}</td>
+                <td>{{ data.respiratory  }}</td>
+                <td>{{ data.coagulation }}</td>
+                <td>{{ data.hepatic }}</td>
+                <td>{{ data.renal }}</td>
+                <td>{{ data.icc }}</td>
+                <td>{{ data.ecog }}</td>
+                <td>{{ data.scoreSOFA }}</td>
+                <td>{{ data.scoreFragility }}</td>
+                <td>{{ data.scoreTotal }}</td>
+                <td>{{ data.classification }}</td>
+                <td>{{ data.active }}</td>
 
-                    {% for data in patient_records %}
-                        <tr>
-                            <th scope="row">{{ data.id }}</th>
-                            <td>{{ data.patient }}</td>
-                            <td>{{ data.age  }}</td>
-                            <td>{{ data.neurological }}</td>
-                            <td>{{ data.cardiovascular }}</td>
-                            <td>{{ data.respiratory  }}</td>
-                            <td>{{ data.coagulation }}</td>
-                            <td>{{ data.hepatic }}</td>
-                            <td>{{ data.renal }}</td>
-                            <td>{{ data.icc }}</td>
-                            <td>{{ data.ecog }}</td>
-                            <td>{{ data.scoreSOFA }}</td>
-                            <td>{{ data.scoreFragility }}</td>
-                            <td>{{ data.scoreTotal }}</td>
-                            <td>{{ data.classification }}</td>
-                            <td>{{ data.active }}</td>
+            </tr>
 
-                        </tr>
+            {% endfor %}
 
-                    {% endfor %}   
+            {% else %}
 
-                {% else %}
+            <p>No Data in The Database so Far!</p>
 
-                    <p>No Data in The Database so Far!</p>     
+            {% endif %}
 
-                {% endif %}
-                    
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 
-    </div>
+</div>
 
 {% endblock  %}
