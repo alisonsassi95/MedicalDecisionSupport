@@ -12,8 +12,8 @@
 
                 <div class="mb-3"></div>
                 <label for="patient" class="form-label">Nome</label>
-                <input type="text" class="form-control" name="patient" id="patient"
-                    required placeholder="Digite o nome completo do paciente">
+                <input type="text" class="form-control" name="patient" id="patient" required
+                    placeholder="Digite o nome completo do paciente">
             </div>
 
             <div class="col-md-3">
@@ -27,47 +27,51 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="card-header">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse">
                                 1. Previsão de sobrevivência a curto prazo, determinado o Sequential Organ Failure
                                 Assessment - SOFA
                                 (simplificado).</a>
                         </h4>
                     </div>
-                    <div id="collapse1" class="panel-collapse collapse in">
+                    <div id="collapse" class="panel-collapse collapse in">
                         <div class="panel-body">
+                            <div class="card" style="width: 100%;"></div>
                             <!--NEUROLOGICAL-->
                             <div class="card" style="width: 100%;">
                                 <div class="card-body">
+
                                     <h5 class="card-title">NEUROLÓGICO</h5>
                                     <h6 class="card-subtitle mb-2 text-muted">Escala de Coma de Glasgow</h6>
-                                    <div class="custom-control custom-radio">
-                                        <input id="neuro0" name="neurological" type="radio" value="0"
-                                            class="custom-control-input" required>
-                                        <label class="custom-control-label" for="neuro0"></label>
-                                        <span class="item-subtitle">15</span>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" id="neuro0" name="neurological" type="radio" value="0"
+                                            required>
+                                        <label class="form-check-label" for="neuro0"></label>
+
+                                        <span class="item-subtitle"> 15 </span>
                                     </div>
-                                    <div class="custom-control custom-radio">
-                                        <input id="neuro1" name="neurological" type="radio" value="1"
-                                            class="custom-control-input" required>
-                                        <label class="custom-control-label" for="neuro1"></label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" id="neuro1" name="neurological" type="radio" value="1"
+                                            required>
+                                        <label class="form-check-label" for="neuro1"></label>
                                         <span class="item-subtitle">13 a 14</span>
                                     </div>
-                                    <div class="custom-control custom-radio">
-                                        <input id="neuro2" name="neurological" type="radio" value="2"
-                                            class="custom-control-input" required>
-                                        <label class="custom-control-label" for="neuro2"></label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" id="neuro2" name="neurological" type="radio" value="2"
+                                            required>
+                                        <label class="form-check-label" for="neuro2"></label>
                                         <span class="item-subtitle">10 a 12</span>
                                     </div>
-                                    <div class="custom-control custom-radio">
-                                        <input id="neuro3" name="neurological" type="radio" value="3"
-                                            class="custom-control-input" required>
-                                        <label class="custom-control-label" for="neuro3"></label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" id="neuro3" name="neurological" type="radio" value="3"
+                                            required>
+                                        <label class="form-check-label" for="neuro3"></label>
                                         <span class="item-subtitle">6 a 9</span>
                                     </div>
-                                    <div class="custom-control custom-radio">
-                                        <input id="neuro4" name="neurological" type="radio" value="4"
-                                            class="custom-control-input" required>
-                                        <label class="custom-control-label" for="neuro4"></label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" id="neuro4" name="neurological" type="radio" value="4"
+                                            required>
+                                        <label class="form-check-label" for="neuro4"></label>
                                         <span class="item-subtitle"> &lt;6 </span>
                                     </div>
                                 </div>
@@ -245,41 +249,37 @@
                                     <!--Init-->
                                     <div class="custom-control custom-radio">
                                         <input id="re0" name="renal" type="radio" value="0" class="custom-control-input"
-                                         required>
+                                            required>
                                         <label class="custom-control-label" for="re0"></label>
                                         <span class="item-subtitle">-</span>
                                     </div>
                                     <div class="custom-control custom-radio">
                                         <input id="re1" name="renal" type="radio" value="1" class="custom-control-input"
-                                         required>
+                                            required>
                                         <label class="custom-control-label" for="re1"></label>
                                         <span class="item-subtitle">1,2 - 1,9<br> &gt;500</span>
                                     </div>
                                     <div class="custom-control custom-radio">
                                         <input id="re2" name="renal" type="radio" value="2" class="custom-control-input"
-                                         required>
+                                            required>
                                         <label class="custom-control-label" for="re2"></label>
                                         <span class="item-subtitle">2 - 3,4 -</span>
                                     </div>
                                     <div class="custom-control custom-radio">
                                         <input id="re3" name="renal" type="radio" value="3" class="custom-control-input"
-                                         required>
+                                            required>
                                         <label class="custom-control-label" for="re3"></label>
                                         <span class="item-subtitle">3,5 - 4,9 &lt;500</span>
                                     </div>
                                     <div class="custom-control custom-radio">
                                         <input id="re4" name="renal" type="radio" value="4" class="custom-control-input"
-                                         required>
+                                            required>
                                         <label class="custom-control-label" for="re4"></label>
                                         <span class="item-subtitle"> &gt;5,0 &lt;200 </span>
                                     </div>
                                     <!--End-->
                                 </div>
                             </div>
-
-
-
-
                         </div>
                     </div>
                 </div>
@@ -289,11 +289,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="card-header">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse">
                             2. Previsão de sobrevivência a longo prazo, avaliado pela presença de comorbidades.</a>
                     </h4>
                 </div>
-                <div id="collapse1" class="panel-collapse collapse in">
+                <div id="collapse" class="panel-collapse collapse in">
                     <div class="panel-body">
                         <!--ICC-->
                         <div class="card" style="width: 100%;">
@@ -303,14 +303,14 @@
                                 <!--Init-->
                                 <div class="custom-control custom-radio">
                                     <input id="icc1" name="icc" type="radio" value="2" class="custom-control-input"
-                                     required>
+                                        required>
                                     <label class="custom-control-label" for="icc1"></label>
                                     <span class="item-subtitle"> Pacientes com expectativa de sobrevida inferior a cinco
                                         anos </span>
                                 </div>
                                 <div class="custom-control custom-radio">
                                     <input id="icc2" name="icc" type="radio" value="4" class="custom-control-input"
-                                     required>
+                                        required>
                                     <label class="custom-control-label" for="icc2"></label>
                                     <span class="item-subtitle"> Pacientes com expectativa de sobrevida inferior a um
                                         ano </span>
@@ -329,31 +329,31 @@
                                 <!--Init-->
                                 <div class="custom-control custom-radio">
                                     <input id="ECOG0" name="ecog" type="radio" value="0" class="custom-control-input"
-                                     required>
+                                        required>
                                     <label class="custom-control-label" for="ECOG0"></label>
                                     <span class="item-subtitle"> Completamente ativo</span>
                                 </div>
                                 <div class="custom-control custom-radio">
                                     <input id="ECOG1" name="ecog" type="radio" value="1" class="custom-control-input"
-                                     required>
+                                        required>
                                     <label class="custom-control-label" for="ECOG1"></label>
                                     <span class="item-subtitle"> Restrição a atividades físicas rigorosas</span>
                                 </div>
                                 <div class="custom-control custom-radio">
                                     <input id="ECOG2" name="ecog" type="radio" value="2" class="custom-control-input"
-                                     required>
+                                        required>
                                     <label class="custom-control-label" for="ECOG2"></label>
                                     <span class="item-subtitle"> Auto-cuidados</span>
                                 </div>
                                 <div class="custom-control custom-radio">
                                     <input id="ECOG3" name="ecog" type="radio" value="3" class="custom-control-input"
-                                     required>
+                                        required>
                                     <label class="custom-control-label" for="ECOG3"></label>
                                     <span class="item-subtitle"> Auto-cuidados limitados</span>
                                 </div>
                                 <div class="check-group">
                                     <input id="ECOG4" name="ecog" type="radio" value="4" class="check-btn check-btn"
-                                     required>
+                                        required>
                                     <label class="check-btn check-btn" for="ECOG4"></label>
                                     <span class="item-title"> Completamente incapaz</span>
                                 </div>

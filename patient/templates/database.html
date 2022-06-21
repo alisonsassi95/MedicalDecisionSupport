@@ -6,8 +6,7 @@
 <hr>
 <nav class="navbar navbar-light bg-light">
     <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+      <input class="form-control mr-sm-2" type="search" id="myInput" placeholder="Pesquisar" aria-label="Pesquisar">
     </form>
   </nav>
 
@@ -33,7 +32,7 @@
                 <th class='table-success' scope="col">Ativo</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
 
             {% if patient_records %}
 
@@ -70,5 +69,15 @@
     </table>
 
 </div>
-
+<script>
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+    </script>
 {% endblock  %}
+

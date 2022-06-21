@@ -212,12 +212,13 @@
                         {% for data in patient_records %}
                         <div class="list-item" data-id="13" data-item-sortable-id="0" draggable="true" role="option"
                             aria-grabbed="false">
-                            <div><a href="#{{avatarPatient}}" data-abc="true"><span
-                                        class="w-40 avatar gd-primary">M</span></a></div>
-                            <div class="flex">
 
-                                <a href="#" class="item-author text-color" data-abc="true" data-toggle="modal"
-                                    data-target="#exampleModalCenter">{{data.patient}}</a>
+                            <div><a href="#" data-abc="true"><span class="{{avatarPatient}}">M</span></a></div>
+
+                            <div class="flex">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                    data-target="#ModalCenter{{data.id}}"> {{data.patient}}</button>
                                 <div class="item-except text-muted text-sm h-1x">Clique no nome para ver mais detalhes
                                 </div>
                             </div>
@@ -225,33 +226,48 @@
                                 <div class="item-date text-muted text-sm d-none d-md-block">Classificação:
                                     {{data.classification}}</div>
                             </div>
-                            <div>
-                                <div class="item-action dropdown">
-                                    <a href="#" data-toggle="dropdown" class="text-muted" data-abc="true">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-more-vertical">
-                                            <circle cx="12" cy="12" r="1"></circle>
-                                            <circle cx="12" cy="5" r="1"></circle>
-                                            <circle cx="12" cy="19" r="1"></circle>
-                                        </svg>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right bg-black" role="menu">
-                                        <a class="dropdown-item" href="#" data-abc="true">See detail </a><a
-                                            class="dropdown-item download" data-abc="true">Download </a><a
-                                            class="dropdown-item edit" data-abc="true">Edit</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item trash" data-abc="true">Delete item</a>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="ModalCenter{{data.id}}" tabindex="-1" role="dialog"
+                            aria-labelledby="ModalCenter{{data.id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ModalCenter{{data.id}}">{{data.patient}}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Name: {{data.patient}} <br>
+                                        Idade: {{data.age}} <br>
+                                        Score Total: {{data.scoreTotal}} <br>
+                                        NEUROLÓGICO: {{ data.neurological }} <br>
+                                        CARDIOVASCULAR: {{ data.cardiovascular }} <br>
+                                        RESPIRATÓRIO: {{ data.respiratory  }} <br>
+                                        COAGULAÇÃO: {{ data.coagulation }} <br>
+                                        HEPÁTICO: {{ data.hepatic }} <br>
+                                        RENAL: {{ data.renal }} <br>
+                                        ICC: {{ data.icc }} <br>
+                                        ECOG: {{ data.ecog }} <br>
+                                        CASSIFICAÇÃO: {{ data.classification }}<br>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- Modal -->
                         {% endfor %}
                         {% else %}
                         <p>Não existem dados para preencher!</p>
                         {% endif %}
                     </div>
+                    <button class="btn btn-danger btn-block playlist text-uppercase"><i class="fa fa-shopping-cart"></i>
+                        Pronto!</button>
                 </div>
             </div>
         </div>
@@ -259,12 +275,7 @@
 
     <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'>
     </script>
-    <script type='text/javascript' src='#'></script>
-    <script type='text/javascript' src='#'></script>
-    <script type='text/javascript' src='#'></script>
-    <script type='text/javascript'>
-        T
-    </script>
+
     <script type='text/javascript'>
         var myLink = document.querySelector('a[href="#"]');
         myLink.addEventListener('click', function (e) {

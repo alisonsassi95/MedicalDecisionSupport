@@ -10,7 +10,7 @@ def home(request):
     return render(request, 'home.html')
 
 def validation(request):
-    dataPacientReturn = DataPatient.objects.all()
+    dataPacientReturn = DataPatient.objects.all().order_by('classification').values()
 
     imageAvatar = [
         'w-40 avatar gd-warning',
@@ -19,7 +19,6 @@ def validation(request):
         'w-40 avatar gd-danger',
         'w-40 avatar gd-primary'
         ]
-    avatarPatient = random.choice(imageAvatar)
 
     return render(request, 'validation.html', {'patient':patient,'avatarPatient':imageAvatar,'patient_records': dataPacientReturn})
 
@@ -102,7 +101,7 @@ def patient(request):
         scoreFragility = scoreFragility,
         scoreTotal = scoreTotal,
         classification=classification[0],
-        active = False
+        active = True
     )
 
     dataPacientReturn = DataPatient.objects.filter(active=True)
