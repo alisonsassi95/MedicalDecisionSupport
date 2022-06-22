@@ -1,7 +1,10 @@
 
 from django.shortcuts import redirect, render
+from .measurementNames import longTermSurvival
+from .measurementNames import shortTermSurvival
 import pandas as pd
 from .models import DataPatient
+
 #For test
 from faker import Faker
 import random
@@ -10,6 +13,7 @@ def home(request):
     return render(request, 'home.html')
 
 def validation(request):
+
     dataPacientReturn = DataPatient.objects.all().order_by('classification').values()
 
     imageAvatar = [
@@ -30,14 +34,23 @@ def patient(request):
     patient = faker.name()
     age = random.randint(10,95)
     neurological = random.randint(0,4)
+    MeaningNeurological = shortTermSurvival.neurologicalName(neurological)
     cardiovascular = random.randint(0,4)
+    MeaningCardiovascular = shortTermSurvival.cardiovascularName(cardiovascular)
     respiratory = random.randint(0,4)
+    MeaningRespiratory = shortTermSurvival.respiratoryName(respiratory)
     coagulation = random.randint(0,4)
+    MeaningCoagulation = shortTermSurvival.coagulationName(coagulation)
     hepatic = random.randint(0,4)
+    MeaningHepatic = shortTermSurvival.hepaticName(hepatic)
     renal = random.randint(0,4)
+    MeaningRenal = shortTermSurvival.renalName(renal)
     icc = random.randrange(2, 5, 2)
-    ecog = random.randrange(2, 5, 2)
-     
+    MeaningIcc = longTermSurvival.iccName(icc)
+    ecog = random.randrange(0,4)
+    MeaningEcog = longTermSurvival.ecogName(ecog)
+
+    
     ''' # Dados do form.
     patient = request.GET['patient']
     age = request.GET['age']
@@ -90,13 +103,21 @@ def patient(request):
         patient=patient,
         age=age,
         neurological=neurological,
+        MeaningNeurological = MeaningNeurological,
         cardiovascular=cardiovascular,
+        MeaningCardiovascular = MeaningCardiovascular,
         respiratory=respiratory,
+        MeaningRespiratory = MeaningRespiratory,
         coagulation=coagulation,
+        MeaningCoagulation = MeaningCoagulation,
         hepatic=hepatic,
+        MeaningHepatic = MeaningHepatic,
         renal=renal,
+        MeaningRenal = MeaningRenal,
         icc=icc,
+        MeaningIcc = MeaningIcc,
         ecog=ecog,
+        MeaningEcog = MeaningEcog,
         scoreSOFA = scoreSOFA,
         scoreFragility = scoreFragility,
         scoreTotal = scoreTotal,

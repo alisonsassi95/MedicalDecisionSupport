@@ -27,7 +27,7 @@ class LongLifeForecast:
     def ICC():
         return random.randrange(2, 5, 2)
     def ECOG():
-        return random.randrange(2, 5, 2)
+        return random.randrange(0,4)
 # Classe para gerar dados do SOFA longo prazo (ICC,ECOG)
 class PersonalData:
     faker = Faker()
