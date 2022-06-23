@@ -213,17 +213,16 @@
                         {% for data in patient_records %}
                         <div class="list-item" data-id="13" data-item-sortable-id="0" draggable="true" role="option"
                             aria-grabbed="false">
-
-                            <div><a href="#" data-abc="true"><span class="{{avatarPatient}}">M</span></a></div>
+                            
+                            <div><a data-abc="true"><span class="w-40 avatar gd-info">{{data.id}}</span></a></div>
 
                             <div class="flex">
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-secondary" data-toggle="modal"
                                     data-target="#ModalCenter{{data.id}}"> {{data.patient}}</button>
-                                <div class="item-except text-muted text-sm h-1x">Clique no nome para ver mais detalhes
-                                </div>
+                                <span class="border border-secondary" style="border-radius: 25px; width: 50%;">Clique aqui para arrastar</span>
                             </div>
-                            <div class="no-wrap">
+                            <div class="no-wrap" >
                                 <div class="item-date text-muted text-sm d-none d-md-block">Classificação:
                                     {{data.classification}}</div>
                             </div>
