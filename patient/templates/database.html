@@ -2,11 +2,12 @@
 
 {% block content %}
 
-<h1 class='text-center text-success mt-4 p-2'> Todos os dados</h1>
+<h1 class='text-center text-secondary mt-4 p-2'> Todos os dados</h1>
 <hr>
 <nav class="navbar navbar-light bg-light">
     <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" id="myInput" placeholder="Pesquisar" aria-label="Pesquisar">
+      <a href="" class="btn btn-success m-1"> Ativos </a>
     </form>
   </nav>
 
@@ -14,22 +15,22 @@
     <table class="table table-striped" >
         <thead>
             <tr>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Identificador do Paciente">Id</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Nome do Paciente">Nome</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Idade">Idade</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Neurological" >Ne</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Cardiovascular" >Cardio</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Respitatório" >Resp</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Coagulaçao" >Coag</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Hepático" >Hep</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Renal" >Renal</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Índice de Comorbidade de Charlson" >ICC</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Eastern Cooperative Oncology Group" >ECOG</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Cálculo SOFA SOFA" >SOFA</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Cálculo Fragility" >Frag</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="Cálculo Total" >Tot</th>
-                <th class='table-success' scope="col" data-toggle="tooltip" title="classificação" >Clas</th>
-                <th class='table-success' scope="col">Ativo</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Identificador do Paciente">Id</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Nome do Paciente">Nome</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Idade">Idade</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Neurological" >Ne</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Cardiovascular" >Cardio</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Respitatório" >Resp</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Coagulaçao" >Coag</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Hepático" >Hep</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Renal" >Renal</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Índice de Comorbidade de Charlson" >ICC</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Eastern Cooperative Oncology Group" >ECOG</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Cálculo SOFA SOFA" >SOFA</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Cálculo Fragility" >Frag</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="Cálculo Total" >Tot</th>
+                <th class='table-secondary' scope="col" data-toggle="tooltip" title="classificação" >Clas</th>
+                <th class='table-secondary' scope="col">Act</th>
             </tr>
         </thead>
         <tbody id="myTable">
@@ -41,19 +42,23 @@
                 <th scope="row">{{ data.id }}</th>
                 <td>{{ data.patient }}</td>
                 <td>{{ data.age  }}</td>
-                <td>{{ data.neurological }}</td>
-                <td>{{ data.cardiovascular }}</td>
-                <td>{{ data.respiratory  }}</td>
-                <td>{{ data.coagulation }}</td>
-                <td>{{ data.hepatic }}</td>
-                <td>{{ data.renal }}</td>
-                <td>{{ data.icc }}</td>
-                <td>{{ data.ecog }}</td>
+                <td>{{ data.MeaningNeurological }}</td>
+                <td>{{ data.MeaningCardiovascular }}</td>
+                <td>{{ data.MeaningRespiratory  }}</td>
+                <td>{{ data.MeaningCoagulation }}</td>
+                <td>{{ data.MeaningHepatic }}</td>
+                <td>{{ data.MeaningRenal }}</td>
+                <td>{{ data.MeaningIcc }}</td>
+                <td>{{ data.MeaningEcog }}</td>
                 <td>{{ data.scoreSOFA }}</td>
                 <td>{{ data.scoreFragility }}</td>
                 <td>{{ data.scoreTotal }}</td>
                 <td>{{ data.classification }}</td>
-                <td>{{ data.active }}</td>
+                <td>
+
+                  <a href="{% url 'delete' data.id %}" class="btn btn-danger m-1"> Desativar </a>
+
+               </td>
 
             </tr>
 

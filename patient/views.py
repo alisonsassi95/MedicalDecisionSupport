@@ -55,15 +55,22 @@ def patient(request):
     patient = request.GET['patient']
     age = request.GET['age']
     neurological = request.GET['neurological']
+    MeaningNeurological = shortTermSurvival.neurologicalName(int(neurological))
     cardiovascular = request.GET['cardiovascular']
+    MeaningCardiovascular = shortTermSurvival.cardiovascularName(int(cardiovascular))
     respiratory = request.GET['respiratory']
+    MeaningRespiratory = shortTermSurvival.respiratoryName(int(respiratory))
     coagulation = request.GET['coagulation']
+    MeaningCoagulation = shortTermSurvival.coagulationName(int(coagulation))
     hepatic = request.GET['hepatic']
+    MeaningHepatic = shortTermSurvival.hepaticName(int(hepatic))
     renal = request.GET['renal']
+    MeaningRenal = shortTermSurvival.renalName(int(renal))
     icc = request.GET['icc']
+    MeaningIcc = longTermSurvival.iccName(int(icc))
     ecog = request.GET['ecog']
+    MeaningEcog = longTermSurvival.ecogName(int(ecog))
     '''
-
     scoreSOFA = calculateSOFA(
         NEUROLOGICAL = neurological,
         CARDIOVASCULAR = cardiovascular,
@@ -201,3 +208,9 @@ def calculateTotal(SOFA, ICC, AGE):
                             )
 
         return scoreCalculateTotal
+
+def delete(request, pk):
+    for idPatient in DataPatient.objects.filter(id=pk):
+        idPatient.active = False
+        idPatient.save()
+    return redirect('records')
