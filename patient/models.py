@@ -1,4 +1,4 @@
-from pydoc import describe
+
 from django.db import models
 #from model_utils.models import TimeStampedModel
 
@@ -26,3 +26,21 @@ class DataPatient(models.Model):
     scoreTotal = models.IntegerField()
     classification = models.IntegerField()
     active = models.BooleanField()
+    exported = models.BooleanField()
+    class Meta:
+        db_table = 'patient'
+
+    def __str__(self):
+        return self.patient
+
+
+class ValidationPatient(models.Model):
+    idPatient = models.ForeignKey('DataPatient', on_delete=models.PROTECT)
+    validationNumber = models.IntegerField()
+    medicalName = models.CharField(max_length=200)
+    medicalClassification = models.IntegerField()
+    class Meta:
+        db_table = 'validation_patient'
+
+    def __str__(self):
+        return self.medicalClassification

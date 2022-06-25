@@ -4,6 +4,7 @@ from .measurementNames import longTermSurvival
 from .measurementNames import shortTermSurvival
 import pandas as pd
 from .models import DataPatient
+from .models import ValidationPatient
 
 #For test
 from faker import Faker
@@ -14,20 +15,12 @@ def home(request):
 
 def validation(request):
 
-    dataPacientReturn = DataPatient.objects.all().order_by('classification').values()
+    patientRecords = DataPatient.objects.all().order_by('classification').values()
 
-    imageAvatar = [
-        'w-40 avatar gd-warning',
-        'w-40 avatar gd-info',
-        'w-40 avatar gd-success',
-        'w-40 avatar gd-danger',
-        'w-40 avatar gd-primary'
-        ]
-
-    return render(request, 'validation.html', {'patient':patient,'avatarPatient':imageAvatar,'patient_records': dataPacientReturn})
+    return render(request, 'validation.html', {'patient':patient,'patient_records': patientRecords})
 
 def patient(request):
-    model = pd.read_pickle('Model_MDS.pickle')
+    decisionAlgorithm = pd.read_pickle('Model_MDS.pickle')
     
     # Dados gerados.
     faker = Faker()
@@ -104,7 +97,9 @@ def patient(request):
 
     print(list_var)
 
-    classification = model.predict([list_var])
+    classification = decisionAlgorithm.predict([list_var])
+
+    
 
     DataPatient.objects.create(
         patient=patient,
@@ -129,20 +124,40 @@ def patient(request):
         scoreFragility = scoreFragility,
         scoreTotal = scoreTotal,
         classification=classification[0],
-        active = True
+        active = True,
+        exported = False
     )
 
-    dataPacientReturn = DataPatient.objects.filter(active=True)
+    patientRecords = DataPatient.objects.filter(active=True)
+    
+    ValueIdPatient = DataPatient.objects.last().__getattribute__('id')
 
-    return render(request, 'patients.html', {'patient':patient,'patient_records': dataPacientReturn,'classification_result': classification[0]})
+    createRegisterValidatePatient(ValueIdPatient)
+    
+    return render(request, 'patients.html', {'patient':patient,'patient_records': patientRecords,'classification_result': classification[0]})
+
+def createRegisterValidatePatient(ValueIdPatient):
+    faker = Faker()
+    ValidationPatient.objects.create(
+        idPatient= DataPatient.objects.get(id= int(ValueIdPatient)),
+        validationNumber=1,
+        medicalName = faker.name(),
+        medicalClassification = 1
+    )
 
 
+def dividePatientsIntoGroups():
+    #Pegar todos os registros do BD que náo estejam como "exportado"
+    #Dividir em grupos entre 5 e 10
+    #Colocar esses grupos no BD validação
+    #Fazer update nos pacientes ( Colocar coluna Exportado) e ativar essa coluna
+    return True
 
 def db_record(request):
-    dataPacientReturn = DataPatient.objects.all()
+    patientRecords = DataPatient.objects.all()
 
     context = {
-        'patient_records': dataPacientReturn
+        'patient_records': patientRecords
     }
 
     return render(request, 'database.html', context)
@@ -209,8 +224,8 @@ def calculateTotal(SOFA, ICC, AGE):
 
         return scoreCalculateTotal
 
-def delete(request, pk):
-    for idPatient in DataPatient.objects.filter(id=pk):
+def disablePatient(request, ValueId):
+    for idPatient in DataPatient.objects.filter(id=ValueId):
         idPatient.active = False
         idPatient.save()
     return redirect('records')
