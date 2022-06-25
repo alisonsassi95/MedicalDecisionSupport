@@ -7,5 +7,10 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('patient/', views.patient, name='patient'),
     path('records/', views.db_record, name='records'),
-    path('validation/', views.validation, name='validation')
+    path('validation/', views.validation, name='validation'),
+    
+    path('makeGroups/', views.dividePatientsIntoGroups, name='makeGroups'),
+
+    #path('exported/<int:pk>', views.exportedPatient, name='exported') # Vai ser para colocar a marcação de exportado.
+    path('disable/<int:ValueId>', views.disablePatient, name='disable')
 ]

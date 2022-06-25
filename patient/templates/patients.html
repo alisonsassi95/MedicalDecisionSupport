@@ -4,64 +4,103 @@
 
     <h1 class='text-center mt-3'>Resultado</h1>
     <hr>
-    <h1 class='text-center text-primary'>O resultado da classificação do <b>{{ patient }}</b> é valor <b>{{ classification_result }}</b></h1>
+    <h4 class='text-center text-secondary'>O resultado da classificação do <b>{{ patient }}</b> é classificação <b>{{ classification_result }}</b></h4>
+
     
-    <h1 class='text-center text-success mt-4 p-2'> Database</h1>
-    <hr>
+    <!-- Collapsable Card Example -->
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <div class="panel-heading">
+            <h5 class="card-header">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse">
+                    Relatórios da base de dados</a>
+            </h5>
+        </div>
+        <!-- Card Content - Collapse -->
+        <div class="collapse show" id="collapse">
+            <div class="card-body">
+                <div class="row">
 
-    <div class='container p-2'>
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Total de Pacientes</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{patient_records}}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            <table class="table p-2 shadow rounded">
-            <thead>
-                <tr>
-                <th class='table-success' scope="col">Id</th>
-                <th class='table-success' scope="col">patient</th>
-                <th class='table-success' scope="col">age</th>
-                <th class='table-success' scope="col">neurological</th>
-                <th class='table-success' scope="col">cardiovascular</th>
-                <th class='table-success' scope="col">respiratory</th>
-                <th class='table-success' scope="col">coagulation</th>
-                <th class='table-success' scope="col">hepatic</th>
-                <th class='table-success' scope="col">renal</th>
-                <th class='table-success' scope="col">icc</th>
-                <th class='table-success' scope="col">ecog</th>
-                <th class='table-success' scope="col">classification</th>               
-                </tr>
-            </thead>
-            <tbody>
+                    <!-- Earnings (Annual) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Pacientes Ativos</div>
+                                         <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                {% if patient_records %}
+                    <!-- Tasks Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Quantidade exportado
+                                        </div>
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    {% for data in patient_records %}
-                        <tr>
-                            <th scope="row">{{ data.id }}</th>
-                            <td>{{ data.patient }}</td>
-                            <td>{{ data.age  }}</td>
-                            <td>{{ data.MeaningNeurological }}</td>
-                            <td>{{ data.MeaningCardiovascular }}</td>
-                            <td>{{ data.MeaningRespiratory  }}</td>
-                            <td>{{ data.MeaningCoagulation }}</td>
-                            <td>{{ data.MeaningHepatic }}</td>
-                            <td>{{ data.MeaningRenal }}</td>
-                            <td>{{ data.MeaningIcc }}</td>
-                            <td>{{ data.MeaningEcog }}</td>
-                            <td>{{ data.classification }}</td>
-
-                        </tr>
-
-                    {% endfor %}   
-
-                {% else %}
-
-                    <p>No Data in The Database so Far!</p>     
-
-                {% endif %}
-                    
-            </tbody>
-        </table>
-
+                    <!-- Pending Requests Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            Falta exportar</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+
     <a class='btn btn-primary mt-4 p-1 text-center' href="{% url 'home' %}">Go Back</a>
+    <a class='btn btn-success mt-4 p-1 text-center' href="{% url 'makeGroups' %}">Make Groups</a>
 </div>
 {% endblock content  %}

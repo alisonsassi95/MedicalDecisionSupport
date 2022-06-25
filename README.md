@@ -38,8 +38,14 @@ INICIALIZAR AMBIENTE
 * Rodar o MakeMigrations: python manage.py makemigrations
 * Rodar o Migrate: python manage.py migrate
 
+[] Criar um usuário Admin: python manage.py createsuperuser
+Seguir os passos do console.
+
+
 [] Iniciar servidor:
 * Iniciar Servidor: python manage.py runserver
+
+
 
 - Comandos
 * Gerar o arquivo requeriments: pip freeze > requirements.txt
