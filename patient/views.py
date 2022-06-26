@@ -1,7 +1,11 @@
 
+from asyncio.windows_events import NULL
+from queue import Queue
+from django.db.models import Max
 from django.shortcuts import redirect, render
 from .measurementNames import longTermSurvival
 from .measurementNames import shortTermSurvival
+from django.db import connection, transaction
 import pandas as pd
 from .models import DataPatient
 from .models import ValidationPatient
@@ -9,6 +13,9 @@ from .models import ValidationPatient
 #For test
 from faker import Faker
 import random
+
+cursor = connection.cursor()
+
 
 def home(request):
     return render(request, 'home.html')
@@ -128,30 +135,70 @@ def patient(request):
         exported = False
     )
 
-    patientRecords = DataPatient.objects.filter(active=True)
-    
-    ValueIdPatient = DataPatient.objects.last().__getattribute__('id')
+    activePatients = DataPatient.objects.filter(active=True).count()
+    totalPatients = DataPatient.objects.values_list().count()
+    exportedPatients = DataPatient.objects.filter(exported=True).count()
+    waitingExportPatients = DataPatient.objects.filter(exported=False).count()
 
-    createRegisterValidatePatient(ValueIdPatient)
-    
-    return render(request, 'patients.html', {'patient':patient,'patient_records': patientRecords,'classification_result': classification[0]})
+    return render(request, 'patients.html',
+            {'patient':patient,
+            'total_patients': totalPatients,
+            'active_patients': activePatients,
+            'exported_patients': exportedPatients,
+            'waiting_export_patients': waitingExportPatients,
+            'classification_result': classification[0]
+            })
 
-def createRegisterValidatePatient(ValueIdPatient):
-    faker = Faker()
+def modifyValueExported(ValueId):
+    for idPatient in DataPatient.objects.filter(id=ValueId):
+        idPatient.exported = True
+        idPatient.save()
+
+def createRegisterValidatePatient(valueIdPatient, ValidationGroup):
+    #faker = Faker()
     ValidationPatient.objects.create(
-        idPatient= DataPatient.objects.get(id= int(ValueIdPatient)),
-        validationNumber=1,
-        medicalName = faker.name(),
-        medicalClassification = 1
+        idPatient= DataPatient.objects.get(id= int(valueIdPatient)),
+        validationNumber= int(ValidationGroup),
+        medicalName = NULL,
+        medicalClassification = NULL
     )
 
+def makeGroupsPage(request):
+    patient_list_notExport = list(DataPatient.objects.values_list('id', flat=True).filter(exported=False))
 
-def dividePatientsIntoGroups():
-    #Pegar todos os registros do BD que náo estejam como "exportado"
-    #Dividir em grupos entre 5 e 10
-    #Colocar esses grupos no BD validação
-    #Fazer update nos pacientes ( Colocar coluna Exportado) e ativar essa coluna
-    return True
+    return render(request, 'makeGroups.html', {'patient_list_notExport': len(patient_list_notExport)})
+
+def makeGroups(request):
+    
+    quantityGroup = 10
+    nextValueGroup = 1 + (ValidationPatient.objects.aggregate(Max('validationNumber'))['validationNumber__max'])
+
+    def split_list(lst, n):
+        for i in range(0, len(lst), n):
+            yield lst[i:i + n]
+    
+    patient_list_notExport = list(DataPatient.objects.values_list('id', flat=True).filter(exported=False))
+    random.shuffle(patient_list_notExport)
+    groupList = list(split_list(patient_list_notExport, quantityGroup))
+
+
+    for gru in range(0,len(groupList),1):
+        #print("Grupo: ", gru)
+        for ite in range(0, len(groupList[gru]), 1):
+            #print("item: ", ite)
+            idPatient = groupList[gru][ite]
+            createRegisterValidatePatient(idPatient,(gru + nextValueGroup))
+            #print("valor: ", groupList[gru][ite])
+            modifyValueExported(idPatient)        
+    
+    #cursor.execute('select p.patient, p.age, p.scoreTotal, p.scoreSOFA, p.scoreFragility, p.classification, vp.validationNumber from validation_patient vp left join patient p on p.id = vp.idPatient_id where vp.medicalClassification = 0')
+    #cursor.fetchone()
+    
+    #dataPatients = DataPatient.objects.prefetch_related('id').filter(ValidationPatient__medicalClassification='0').values('patient','age', 'scoreTotal', 'scoreSOFA', 'scoreFragility', 'classification','ValidationPatient__validationNumber')
+    dataPatients = DataPatient.objects.prefetch_related('ValidationPatient_set').all()
+    
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",dataPatients)
+    return render(request, 'makeGroups.html', {'groupList': dataPatients})
 
 def db_record(request):
     patientRecords = DataPatient.objects.all()

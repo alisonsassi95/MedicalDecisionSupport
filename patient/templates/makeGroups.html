@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class='text-center text-secondary mt-4 p-2'> Gerar grupos</h1>
+<hr>
+<div class="p-5">
+  <form action="{% url 'makeGroups' %}">
+    <div class=" form-group row">
+      <div class="col-sm-6 mb-3 mb-sm-0">
+        Quantidade de Grupos
+        <input type="number" class="form-control text-center col-md-4" id="quantityGroup" placeholder="Digite">
+      </div>
+    </div>
+
+    {% if patient_list_notExport %}
+    <h6>Existem {{patient_list_notExport}} registros sem exportar.</h6>
+    <button type="submit" value="Submit" style="width: 100%;"
+      class="btn btn-primary mt-4 mb-4 shadow pt-3 pb-4 pl-1 pr-1">Criar grupos
+    </button>
+    {% else %}<h6>Sem registros para gerar grupos.</h6>
+    {% endif %}
+
+  </form>
+
+  <h1 class='text-center text-secondary mt-4 p-2'>Grupos para Validar</h1>
+  <hr>
+  <nav class="navbar navbar-light bg-light">
+    <form class="form-inline">
+      <input class="form-control mr-sm-2" type="search" id="myInput" placeholder="Pesquisar" aria-label="Pesquisar">
+    </form>
+  </nav>
+
+  {% if dataPatients %}
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class='table-secondary' scope="col" data-toggle="tooltip" title="Nome do Paciente">Nome</th>
+          <th class='table-secondary' scope="col" data-toggle="tooltip" title="Idade">Idade</th>
+          <th class='table-secondary' scope="col" data-toggle="tooltip" title="Cálculo Total">Tot</th>
+          <th class='table-secondary' scope="col" data-toggle="tooltip" title="Cálculo SOFA SOFA">SOFA</th>
+          <th class='table-secondary' scope="col" data-toggle="tooltip" title="Cálculo Fragility">Frag</th>
+          <th class='table-secondary' scope="col" data-toggle="tooltip" title="classificação">Clas</th>
+          <th class='table-secondary' scope="col" data-toggle="tooltip" title="NumeroClassificacao">Group</th>
+          <th class='table-secondary' scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody id="myTable">
+
+
+        {% for data in dataPatients %}
+        <tr>
+          <th scope="row">{{ data.patient }}</th>
+          <td>{{ data.age  }}</td>
+          <td>{{ data.scoreTotal }}</td>
+          <td>{{ data.scoreSOFA }}</td>
+          <td>{{ data.scoreFragility }}</td>
+          <td>{{ data.classification }}</td>
+          <td>{{ data.validationNumber }}</td>
+          <td>
+
+            <a href="{% url 'disable' data.id %}" class="btn btn-danger m-1"> Avaliar </a>
+
+          </td>
+
+        </tr>
+
+        {% endfor %}
+
+        {% else %}
+
+        <h6>Sem grupos para validar</h6>
+
+        {% endif %}
+
+      </tbody>
+    </table>
+
+  </div>
+  <script>
+    $(document).ready(function () {
+      $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+  </script>
+
+</div>
+
+{% endblock  %}

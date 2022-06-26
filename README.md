@@ -46,7 +46,6 @@ Seguir os passos do console.
 * Iniciar Servidor: python manage.py runserver
 
 
-
 - Comandos
 * Gerar o arquivo requeriments: pip freeze > requirements.txt
 
