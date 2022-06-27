@@ -195,8 +195,12 @@ def makeGroups(request):
     #cursor.fetchone()
     
     #dataPatients = DataPatient.objects.prefetch_related('id').filter(ValidationPatient__medicalClassification='0').values('patient','age', 'scoreTotal', 'scoreSOFA', 'scoreFragility', 'classification','ValidationPatient__validationNumber')
-    dataPatients = DataPatient.objects.prefetch_related('ValidationPatient_set').all()
-    
+    allPatientsData = DataPatient.objects.all()
+    allPatientsData = ValidationPatient.objects.select_related('idPatient').all()
+
+    for data in allPatientsData:
+        print(data.DataPatient.patient)
+        
     print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",dataPatients)
     return render(request, 'makeGroups.html', {'groupList': dataPatients})
 
