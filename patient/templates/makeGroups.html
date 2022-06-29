@@ -37,13 +37,8 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th class='table-secondary' scope="col" data-toggle="tooltip" title="Nome do Paciente">Nome</th>
-          <th class='table-secondary' scope="col" data-toggle="tooltip" title="Idade">Idade</th>
-          <th class='table-secondary' scope="col" data-toggle="tooltip" title="Cálculo Total">Tot</th>
-          <th class='table-secondary' scope="col" data-toggle="tooltip" title="Cálculo SOFA SOFA">SOFA</th>
-          <th class='table-secondary' scope="col" data-toggle="tooltip" title="Cálculo Fragility">Frag</th>
-          <th class='table-secondary' scope="col" data-toggle="tooltip" title="classificação">Clas</th>
-          <th class='table-secondary' scope="col" data-toggle="tooltip" title="NumeroClassificacao">Group</th>
+          <th class='table-secondary' scope="col" data-toggle="tooltip" title="NumeroClassificacao">Numero do Grupo sem Classificação</th>
+          <th class='table-secondary' scope="col" data-toggle="tooltip" title="NumeroClassificacao">Numero de Pacientes por Grupo</th>
           <th class='table-secondary' scope="col">Action</th>
         </tr>
       </thead>
@@ -52,16 +47,11 @@
 
         {% for data in dataPatients %}
         <tr>
-          <th scope="row">{{ data.patient }}</th>
-          <td>{{ data.age  }}</td>
-          <td>{{ data.scoreTotal }}</td>
-          <td>{{ data.scoreSOFA }}</td>
-          <td>{{ data.scoreFragility }}</td>
-          <td>{{ data.classification }}</td>
-          <td>{{ data.validationNumber }}</td>
+          <th scope="row">{{ data.validationNumber }}</th>
+          <td>{{ data.countPatient }}</td>
           <td>
 
-            <a href="{% url 'disable' data.id %}" class="btn btn-danger m-1"> Avaliar </a>
+            <a href="{% url 'validation' data.validationNumber %}" class="btn btn-danger m-1"> Avaliar </a>
 
           </td>
 
