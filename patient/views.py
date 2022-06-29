@@ -1,11 +1,10 @@
 
 from asyncio.windows_events import NULL
-from queue import Queue
+from django.db.models import Count
 from django.db.models import Max
 from django.shortcuts import redirect, render
 from .measurementNames import longTermSurvival
 from .measurementNames import shortTermSurvival
-from django.db import connection, transaction
 import pandas as pd
 from .models import DataPatient
 from .models import ValidationPatient
@@ -14,17 +13,18 @@ from .models import ValidationPatient
 from faker import Faker
 import random
 
-cursor = connection.cursor()
-
 
 def home(request):
     return render(request, 'home.html')
 
-def validation(request):
+def validation(request, validateNumb):
 
+    
     patientRecords = DataPatient.objects.all().order_by('classification').values()
-
-    return render(request, 'validation.html', {'patient':patient,'patient_records': patientRecords})
+    #patientRecordsPerGroup = ValidationPatient.objects.filter(validationNumber = 0)
+    #patientRecordsPerGroup = ValidationPatient.objects.filter(validationNumber = '0').all()
+    #print(patientRecordsPerGroup)
+    return render(request, 'validation.html', {'patient_records': patientRecords})
 
 def patient(request):
     decisionAlgorithm = pd.read_pickle('Model_MDS.pickle')
@@ -183,26 +183,14 @@ def makeGroups(request):
 
 
     for gru in range(0,len(groupList),1):
-        #print("Grupo: ", gru)
         for ite in range(0, len(groupList[gru]), 1):
-            #print("item: ", ite)
             idPatient = groupList[gru][ite]
             createRegisterValidatePatient(idPatient,(gru + nextValueGroup))
-            #print("valor: ", groupList[gru][ite])
             modifyValueExported(idPatient)        
     
-    #cursor.execute('select p.patient, p.age, p.scoreTotal, p.scoreSOFA, p.scoreFragility, p.classification, vp.validationNumber from validation_patient vp left join patient p on p.id = vp.idPatient_id where vp.medicalClassification = 0')
-    #cursor.fetchone()
-    
-    #dataPatients = DataPatient.objects.prefetch_related('id').filter(ValidationPatient__medicalClassification='0').values('patient','age', 'scoreTotal', 'scoreSOFA', 'scoreFragility', 'classification','ValidationPatient__validationNumber')
-    allPatientsData = DataPatient.objects.all()
-    allPatientsData = ValidationPatient.objects.select_related('idPatient').all()
+    allPatientsData = ValidationPatient.objects.filter(medicalClassification = '0').values('validationNumber').annotate(countPatient=Count('idPatient__patient')).order_by('validationNumber')
 
-    for data in allPatientsData:
-        print(data.DataPatient.patient)
-        
-    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",dataPatients)
-    return render(request, 'makeGroups.html', {'groupList': dataPatients})
+    return render(request, 'makeGroups.html', {'dataPatients': allPatientsData})
 
 def db_record(request):
     patientRecords = DataPatient.objects.all()
