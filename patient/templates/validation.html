@@ -210,21 +210,22 @@
                         <!-- 0000000000000000000000000000000000000000000000000 -->
                         {% if patient_records %}
 
-                        {% for data in patient_records %}
+                        {% for index, data in patient_records %}
+
                         <div class="list-item" data-id="13" data-item-sortable-id="0" draggable="true" role="option"
                             aria-grabbed="false">
                             
-                            <div><a data-abc="true"><span class="w-40 avatar gd-info">{{data.id}}</span></a></div>
+                            <div><a data-abc="true"><span class="w-40 avatar gd-info">{{data.idPatient__id}}</span></a></div>
 
                             <div class="flex">
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-secondary" data-toggle="modal"
-                                    data-target="#ModalCenter{{data.id}}"> {{data.patient}}</button>
+                                    data-target="#ModalCenter{{data.id}}"> {{data.idPatient__patient}}</button>
                                 <span class="border border-secondary" style="border-radius: 25px; width: 50%;">Clique aqui para arrastar</span>
                             </div>
                             <div class="no-wrap" >
                                 <div class="item-date text-muted text-sm d-none d-md-block">Classificação:
-                                    {{data.classification}}</div>
+                                    {{data.idPatient__classification}}</div>
                             </div>
                         </div>
 
@@ -234,24 +235,24 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="ModalCenter{{data.id}}">{{data.patient}}</h5>
+                                        <h5 class="modal-title" id="ModalCenter{{data.id}}">{{data.idPatient__patient}}</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Name: {{data.patient}} <br>
-                                        Idade: {{data.age}} <br>
-                                        Score Total: {{data.scoreTotal}} <br>
-                                        NEUROLÓGICO: {{ data.MeaningNeurological }} <br>
-                                        CARDIOVASCULAR: {{ data.MeaningCardiovascular }} <br>
-                                        RESPIRATÓRIO: {{ data.MeaningRespiratory  }} <br>
-                                        COAGULAÇÃO: {{ data.MeaningCoagulation }} <br>
-                                        HEPÁTICO: {{ data.MeaningHepatic }} <br>
-                                        RENAL: {{ data.MeaningRenal }} <br>
-                                        ICC: {{ data.MeaningIcc }} <br>
-                                        ECOG: {{ data.MeaningEcog }} <br>
-                                        CASSIFICAÇÃO: {{ data.classification }}<br>
+                                        Name: {{data.idPatient__patient}} <br>
+                                        Idade: {{data.idPatient__age}} <br>
+                                        Score Total: {{data.idPatient__scoreTotal}} <br>
+                                        NEUROLÓGICO: {{ data.idPatient__MeaningNeurological }} <br>
+                                        CARDIOVASCULAR: {{ data.idPatient__MeaningCardiovascular }} <br>
+                                        RESPIRATÓRIO: {{ data.idPatient__MeaningRespiratory  }} <br>
+                                        COAGULAÇÃO: {{ data.idPatient__MeaningCoagulation }} <br>
+                                        HEPÁTICO: {{ data.idPatient__MeaningHepatic }} <br>
+                                        RENAL: {{ data.idPatient__MeaningRenal }} <br>
+                                        ICC: {{ data.idPatient__MeaningIcc }} <br>
+                                        ECOG: {{ data.idPatient__MeaningEcog }} <br>
+                                        CASSIFICAÇÃO: {{ data.idPatient__classification }}<br>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -266,7 +267,7 @@
                         <p>Não existem dados para preencher!</p>
                         {% endif %}
                     </div>
-                    <button class="btn btn-danger btn-block playlist text-uppercase"><i class="fa fa-shopping-cart"></i>
+                    <button id= 'get' class="btn btn-success btn-block playlist text-uppercase"><i class="fa fa-shopping-cart"></i>
                         Pronto!</button>
                 </div>
             </div>
@@ -282,6 +283,21 @@
             e.preventDefault();
         });
     </script>
+
+<!--https://mdbootstrap.com/support/jquery/jquery-sortable-get-order/-->
+    <script>            
+        $('#get').on('click', function() {
+
+            var idsInOrder = $("#sortable").sortable('toArray', {
+            attribute: 'data-id'
+            });
+
+            console.log("Deu certo")
+            console.log(idsInOrder);
+        })
+    </script>
+
+
 
 </body>
 

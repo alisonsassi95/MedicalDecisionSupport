@@ -19,11 +19,36 @@ def home(request):
 
 def validation(request, validateNumb):
 
-    
-    patientRecords = DataPatient.objects.all().order_by('classification').values()
-    #patientRecordsPerGroup = ValidationPatient.objects.filter(validationNumber = 0)
-    #patientRecordsPerGroup = ValidationPatient.objects.filter(validationNumber = '0').all()
-    #print(patientRecordsPerGroup)
+    patientRecords = ValidationPatient.objects.filter(validationNumber = validateNumb
+        ).values(
+        'idPatient__id',
+        'idPatient__patient',
+        'idPatient__age',                    
+        'idPatient__neurological',           
+        'idPatient__MeaningNeurological',    
+        'idPatient__cardiovascular',         
+        'idPatient__MeaningCardiovascular',  
+        'idPatient__respiratory',            
+        'idPatient__MeaningRespiratory',     
+        'idPatient__coagulation',            
+        'idPatient__MeaningCoagulation',     
+        'idPatient__hepatic',                
+        'idPatient__MeaningHepatic',         
+        'idPatient__renal',                  
+        'idPatient__MeaningRenal',           
+        'idPatient__icc',                    
+        'idPatient__MeaningIcc',             
+        'idPatient__ecog',                   
+        'idPatient__MeaningEcog',            
+        'idPatient__scoreSOFA',              
+        'idPatient__scoreFragility',         
+        'idPatient__scoreTotal',             
+        'idPatient__classification',
+        'idPatient__active',
+        'idPatient__exported',
+        'validationNumber'
+        ).order_by('validationNumber')
+
     return render(request, 'validation.html', {'patient_records': patientRecords})
 
 def patient(request):
@@ -163,11 +188,6 @@ def createRegisterValidatePatient(valueIdPatient, ValidationGroup):
         medicalClassification = NULL
     )
 
-def makeGroupsPage(request):
-    patient_list_notExport = list(DataPatient.objects.values_list('id', flat=True).filter(exported=False))
-
-    return render(request, 'makeGroups.html', {'patient_list_notExport': len(patient_list_notExport)})
-
 def makeGroups(request):
     
     quantityGroup = 10
@@ -190,7 +210,7 @@ def makeGroups(request):
     
     allPatientsData = ValidationPatient.objects.filter(medicalClassification = '0').values('validationNumber').annotate(countPatient=Count('idPatient__patient')).order_by('validationNumber')
 
-    return render(request, 'makeGroups.html', {'dataPatients': allPatientsData})
+    return render(request, 'makeGroups.html', {'dataPatients': allPatientsData, 'patient_list_notExport': len(patient_list_notExport)})
 
 def db_record(request):
     patientRecords = DataPatient.objects.all()
