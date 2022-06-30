@@ -9,7 +9,6 @@ urlpatterns = [
     path('records/', views.db_record, name='records'),
     path('validation/<int:validateNumb>', views.validation, name='validation'),
     
-    path('makeGroupsPage/', views.makeGroupsPage, name='makeGroupsPage'),
     path('makeGroups/', views.makeGroups, name='makeGroups'),
 
 
