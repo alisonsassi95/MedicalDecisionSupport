@@ -7,7 +7,7 @@ chardet==4.0.0
 colorama==0.4.4
 debugpy==1.6.2
 decorator==5.1.0
-Django==4.0.5
+Django==4.0.6
 django-model-utils==4.2.0
 entrypoints==0.3
 executing==0.8.3
