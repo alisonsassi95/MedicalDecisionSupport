@@ -51,9 +51,10 @@ def validation(request, validateNumb):
 
     return render(request, 'validation.html', {'patient_records': patientRecords})
 
+
 def patient(request):
     decisionAlgorithm = pd.read_pickle('Model_MDS.pickle')
-    
+    '''
     # Dados gerados.
     faker = Faker()
     patient = faker.name()
@@ -74,7 +75,6 @@ def patient(request):
     MeaningIcc = longTermSurvival.iccName(icc)
     ecog = random.randrange(0,4)
     MeaningEcog = longTermSurvival.ecogName(ecog)
-
     
     ''' # Dados do form.
     patient = request.GET['patient']
@@ -95,7 +95,7 @@ def patient(request):
     MeaningIcc = longTermSurvival.iccName(int(icc))
     ecog = request.GET['ecog']
     MeaningEcog = longTermSurvival.ecogName(int(ecog))
-    '''
+    
     scoreSOFA = calculateSOFA(
         NEUROLOGICAL = neurological,
         CARDIOVASCULAR = cardiovascular,
@@ -164,6 +164,8 @@ def patient(request):
     totalPatients = DataPatient.objects.values_list().count()
     exportedPatients = DataPatient.objects.filter(exported=True).count()
     waitingExportPatients = DataPatient.objects.filter(exported=False).count()
+    topfive = DataPatient.objects.all()[:5]
+
 
     return render(request, 'patients.html',
             {'patient':patient,
@@ -171,7 +173,8 @@ def patient(request):
             'active_patients': activePatients,
             'exported_patients': exportedPatients,
             'waiting_export_patients': waitingExportPatients,
-            'classification_result': classification[0]
+            'classification_result': classification[0],
+            'topfive': topfive
             })
 
 def modifyValueExported(ValueId):
@@ -190,7 +193,7 @@ def createRegisterValidatePatient(valueIdPatient, ValidationGroup):
 
 def makeGroups(request):
     
-    quantityGroup = 10
+    quantityGroup = 10 # Tem que pegar da página
     nextValueGroup = 1 + (ValidationPatient.objects.aggregate(Max('validationNumber'))['validationNumber__max'])
 
     def split_list(lst, n):

@@ -75,6 +75,6 @@ if not (exist):
     createFile()
 
 counter = 0
-while counter < 100:
+while counter < 1000:
   insertOneRegisterInFile()
   counter += 1

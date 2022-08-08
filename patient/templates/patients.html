@@ -1,5 +1,6 @@
 {% include 'base.html' %}
 {% block content  %}
+
 <head>
 
     <meta charset="utf-8">
@@ -91,7 +92,8 @@
                                             exportado
                                         </div>
                                         <div class="row no-gutters align-items-center">
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{exported_patients}}</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{exported_patients}}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-auto">
@@ -110,7 +112,8 @@
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                             Falta exportar</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{waiting_export_patients}}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{waiting_export_patients}}
+                                        </div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -124,8 +127,70 @@
         </div>
     </div>
 
-    <a class='btn btn-primary mt-4 p-1 text-center' href="{% url 'home' %}">Go Back</a>
-    <a class='btn btn-success mt-4 p-1 text-center' href="{% url 'makeGroups' %}">Make Groups</a>
-</div>
+    <!-- Collapsable Card Example -->
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <div class="panel-heading">
+            <h5 class="card-header">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse">
+                    Ordem prioridade!</a>
+            </h5>
+        </div>
+        <!-- Card Content - Collapse -->
+        <div class="collapse show" id="collapse">
+            <div class="card-body">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class='table-secondary' scope="col" data-toggle="tooltip"
+                                        title="Ordem">Ordem</th>
+                                    <th class='table-secondary' scope="col" data-toggle="tooltip"
+                                        title="Nome do Paciente">Nome</th>
+                                    <th class='table-secondary' scope="col" data-toggle="tooltip" title="Idade">Idade
+                                    </th>
+                                    <th class='table-secondary' scope="col" data-toggle="tooltip" title="classificação">
+                                        classificação</th>
+                                    <th class='table-secondary' scope="col">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myTable">
 
-{% endblock content  %}
+                                {% if topfive %}
+
+                                {% for data in topfive %}
+                                <tr>
+                                    <th scope="row">{{data}}</th>
+                                    <td>{{ data.patient }}</td>
+                                    <td>{{ data.age  }}</td>
+                                    <td>{{ data.classification }}</td>
+                                    <td>
+
+                                        <a href="{% url 'disable' data.id %}" class="btn btn-danger m-1"> Desativar </a>
+
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+                                {% else %}
+
+                                <p>No Data in The Database so Far!</p>
+
+                                {% endif %}
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a class='btn btn-primary mt-4 p-1 text-center' href="{% url 'home' %}">Go Back</a>
+        <a class='btn btn-success mt-4 p-1 text-center' href="{% url 'makeGroups' %}">Make Groups</a>
+    </div>
+
+    {% endblock content  %}
