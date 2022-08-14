@@ -127,7 +127,9 @@ def patient(request):
     list_var.append(scoreFragility)
     list_var.append(scoreTotal)
 
+    
     print(list_var)
+ 
 
     classification = decisionAlgorithm.predict([list_var])
 

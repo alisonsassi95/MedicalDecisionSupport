@@ -51,12 +51,16 @@ def validation(request, validateNumb):
 
     return render(request, 'validation.html', {'patient_records': patientRecords})
 
+#Tenho que gerar uma massa de dados - ok
+#Tenho que validar ela com algumas regras - FALTA
+#Tenho que armazenar em uma base de dados - FALTA
 
 def patient(request):
     decisionAlgorithm = pd.read_pickle('Model_MDS.pickle')
     listPatient = []
     
     for i in range(4):
+        
         # Dados gerados.
         faker = Faker()
         patient = faker.name()
@@ -78,8 +82,8 @@ def patient(request):
         ecog = random.randrange(0,4)
         MeaningEcog = longTermSurvival.ecogName(ecog)
         
-        ''' # Dados do form.
-        patient = request.GET['patient']
+        # Dados do form.
+        '''patient = request.GET['patient']
         age = request.GET['age']
         neurological = request.GET['neurological']
         MeaningNeurological = shortTermSurvival.neurologicalName(int(neurological))
@@ -167,11 +171,12 @@ def patient(request):
         active = True,
         exported = False
     )
-
+    
     activePatients = DataPatient.objects.filter(active=True).count()
     totalPatients = DataPatient.objects.values_list().count()
     exportedPatients = DataPatient.objects.filter(exported=True).count()
     waitingExportPatients = DataPatient.objects.filter(exported=False).count()
+    # Mostra a Lista de Pacientes na espera
     topfive = DataPatient.objects.all()[:5]
 
 
@@ -184,7 +189,7 @@ def patient(request):
             'classification_result': classification[0],
             'topfive': topfive
             })
-
+'''
 def modifyValueExported(ValueId):
     for idPatient in DataPatient.objects.filter(id=ValueId):
         idPatient.exported = True
