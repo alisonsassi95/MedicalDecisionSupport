@@ -21,7 +21,7 @@
 
                     <div class="col-md-3">
                         <label for="age" class="form-label">Idade</label>
-                        <input type="number" class="form-control" name="age" id="age" required
+                        <input type="number" class="form-control" name="age" id="age" onkeyup="checkoutAge()" required
                             placeholder="Digite a idade do paciente">
                     </div>
                     <br> <br>
@@ -333,14 +333,9 @@
                                 </div>
 
                                 <!--ECOG-->
-                                <div class="card" style="width: 100%;">
+                                <div class="card" id="ECOG"style="width: 100%;">
                                     <div class="card-body">
                                         <h5 class="card-title">ECOG - Eastern Cooperative Oncology Group</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">* Só deve ser aplicada para doentes
-                                            com
-                                            idade
-                                            igual ou
-                                            superior a 60 anos.</h6>
                                         <!--Init-->
                                         <div class="form-check form-check-inline">
                                             <input id="ECOG0" name="ecog" type="radio" value="0"
@@ -389,5 +384,17 @@
     </div>
 </div>
 
+<script>
+function checkoutAge(){
+    var checkbox = document.querySelector("#ECOG0");
 
+    if((document.getElementById('age').value) < 60){
+        $("#ECOG").hide();
+        checkbox.checked = true;
+    }
+    else
+        $("#ECOG").show();
+        checkbox.checked = false;
+}
+</script>
 {% endblock content  %}
