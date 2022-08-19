@@ -27,35 +27,36 @@ def generateData(self):
 
 def validation(request, validateNumb):
 
-    patientRecords = ValidationPatient.objects.filter(validationNumber = validateNumb
-        ).values(
-        'idPatient__id',
-        'idPatient__patient',
-        'idPatient__age',                    
-        'idPatient__neurological',           
-        'idPatient__MeaningNeurological',    
-        'idPatient__cardiovascular',         
-        'idPatient__MeaningCardiovascular',  
-        'idPatient__respiratory',            
-        'idPatient__MeaningRespiratory',     
-        'idPatient__coagulation',            
-        'idPatient__MeaningCoagulation',     
-        'idPatient__hepatic',                
-        'idPatient__MeaningHepatic',         
-        'idPatient__renal',                  
-        'idPatient__MeaningRenal',           
-        'idPatient__icc',                    
-        'idPatient__MeaningIcc',             
-        'idPatient__ecog',                   
-        'idPatient__MeaningEcog',            
-        'idPatient__scoreSOFA',              
-        'idPatient__scoreFragility',         
-        'idPatient__scoreTotal',             
-        'idPatient__classification',
-        'idPatient__active',
-        'idPatient__exported',
-        'validationNumber'
+    patientRecords = ValidationPatient.objects.filter(validationNumber = validateNumb).exclude( medicalClassification = 1).values(
+                        'idPatient__id',
+                        'idPatient__patient',
+                        'idPatient__age',                    
+                        'idPatient__neurological',           
+                        'idPatient__MeaningNeurological',    
+                        'idPatient__cardiovascular',         
+                        'idPatient__MeaningCardiovascular',  
+                        'idPatient__respiratory',            
+                        'idPatient__MeaningRespiratory',     
+                        'idPatient__coagulation',            
+                        'idPatient__MeaningCoagulation',     
+                        'idPatient__hepatic',                
+                        'idPatient__MeaningHepatic',         
+                        'idPatient__renal',                  
+                        'idPatient__MeaningRenal',           
+                        'idPatient__icc',                    
+                        'idPatient__MeaningIcc',             
+                        'idPatient__ecog',                   
+                        'idPatient__MeaningEcog',            
+                        'idPatient__scoreSOFA',              
+                        'idPatient__scoreFragility',         
+                        'idPatient__scoreTotal',             
+                        'idPatient__classification',
+                        'idPatient__active',
+                        'idPatient__exported',
+                        'validationNumber'
         ).order_by('validationNumber')
+
+    patientRecordsinList = list(patientRecords.values_list())
 
     return render(request, 'validation.html', {'patient_records': patientRecords})
 
@@ -305,3 +306,8 @@ def disablePatient(request, ValueId):
         idPatient.active = False
         idPatient.save()
     return redirect('records')
+
+def validationMedical(request):
+    print("--------------------------------CHEGOU AQUI----------------------")
+    print(request)
+    return

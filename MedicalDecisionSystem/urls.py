@@ -8,6 +8,8 @@ urlpatterns = [
     path('patient/', views.patient, name='patient'),
     path('records/', views.db_record, name='records'),
     path('validation/<int:validateNumb>', views.validation, name='validation'),
+    path('validationMedical/', views.validationMedical, name='validationMedical'),
+    
 
     path('generateData/', views.generateData, name='generateData'),
     path('makeGroups/', views.makeGroups, name='makeGroups'),
