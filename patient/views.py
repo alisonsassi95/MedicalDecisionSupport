@@ -1,6 +1,7 @@
 
 from asyncio.windows_events import NULL
 from cmath import isnan
+from itertools import count
 from django.db.models import Count
 from django.db.models import Max
 from django.shortcuts import redirect, render
@@ -20,10 +21,9 @@ def home(request):
     return render(request, 'home.html')
 
 
-def generateData(request):
+def generateData():
     runScriptGenerateDataPatient()
     makeGroups()
-    return render(request, 'home.html')
 
 def validation(request, validateNumb):
 
@@ -205,7 +205,7 @@ def createRegisterValidatePatient(valueIdPatient, ValidationGroup):
 def makeGroups(request):
     
     quantityGroup = 10
-    if(ValidationPatient.objects.all().count < 1):
+    if(len(ValidationPatient.objects.all()) < 1):
         nextValueGroup = 1
     else:
         nextValueGroup = 1 + (ValidationPatient.objects.aggregate(Max('validationNumber'))['validationNumber__max'])
