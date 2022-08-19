@@ -204,44 +204,72 @@
     </script>
     <div class="page-content page-container" id="page-content">
         <div class="padding">
-            {% if patient_records %}
-            <section>
-                    <div class="100%" center>
-                        <ul id="sortable" class="list-group">
-                            {% for data in patient_records %}
-                            <div class="card">
-                                <div data-id="1" class="card-body"> 
-                                    <h6 class="card-title">{{data.idPatient__patient}}</h6>
-                                    
-                                      <p class="card-text">
-                                        Name: {{data.idPatient__patient}}, 
-                                        Idade: {{data.idPatient__age}} 
-                                        Score Total: {{data.idPatient__scoreTotal}}
-                                    </p>
+            
+                <div class="100%">
+                    <div class="list list-row card" id="sortable" data-sortable-id="0" aria-dropeffect="move">
+
+                        {% if patient_records %}
+                        {% for data in patient_records %}
+
+                        <div class="list-item" data-item-sortable-id="0" draggable="true" role="option"
+                            aria-grabbed="false">
+                    
+
+                            <div><a data-abc="true"><span class="w-40 avatar gd-info">1</span></a></div>
+
+                            <div class="flex">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                    data-target="#ModalCenter{{data.id}}"> {{data.idPatient__patient}}</button>
+                                <span class="border border-secondary" style="border-radius: 25px; width: 50%;">Clique aqui para arrastar</span>
+                            </div>
+                            <div class="no-wrap" >
+                                <div class="item-date text-muted text-sm d-none d-md-block">Classificação:
+                                    {{data.idPatient__classification}}</div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="ModalCenter{{data.id}}" tabindex="-1" role="dialog"
+                            aria-labelledby="ModalCenter{{data.id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ModalCenter{{data.id}}">{{data.idPatient__patient}}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Name: {{data.idPatient__patient}} <br>
+                                        Idade: {{data.idPatient__age}} <br>
+                                        Score Total: {{data.idPatient__scoreTotal}} <br>
+                                        NEUROLÓGICO: {{ data.idPatient__MeaningNeurological }} <br>
+                                        CARDIOVASCULAR: {{ data.idPatient__MeaningCardiovascular }} <br>
+                                        RESPIRATÓRIO: {{ data.idPatient__MeaningRespiratory  }} <br>
+                                        COAGULAÇÃO: {{ data.idPatient__MeaningCoagulation }} <br>
+                                        HEPÁTICO: {{ data.idPatient__MeaningHepatic }} <br>
+                                        RENAL: {{ data.idPatient__MeaningRenal }} <br>
+                                        ICC: {{ data.idPatient__MeaningIcc }} <br>
+                                        ECOG: {{ data.idPatient__MeaningEcog }} <br>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
                                 </div>
                             </div>
-
-                            <!-- <li data-id="1" class="ui-state-highlight">Item 1</li>
-                            <li data-id="2" class="ui-state-highlight">Item 2</li>
-                            <li data-id="3" class="ui-state-highlight">Item 3</li>
-                            <li data-id="4" class="ui-state-highlight">Item 4</li>
-                            <li data-id="5" class="ui-state-highlight">Item 5</li>
-                            <li data-id="6" class="ui-state-highlight">Item 6</li>
-                            <li data-id="7" class="ui-state-highlight">Item 7</li>
-                            <li data-id="8" class="ui-state-highlight">Item 8</li>
-                            <li data-id="9" class="ui-state-highlight">Item 9</li>
-                            <li data-id="10" class="ui-state-highlight">Item 10</li>-->
-
-                            
-                            {% endfor %}
-                        </ul>
+                        </div>
+                        <!-- Modal -->
+                        {% endfor %}
+                        {% else %}
+                        <p>Não existem dados para preencher!</p>
+                        {% endif %}
                     </div>
-                <button id="get" class="btn btn-success btn-block playlist text-uppercase">Pronto</button>
-            </section>
-
-            {% else %}
-            <p>Não existem dados para preencher!</p>
-            {% endif %}
+                    <button id= 'get' class="btn btn-success btn-block playlist text-uppercase"><i class="fa fa-shopping-cart"></i>
+                        Pronto!</button>
+                </div>
+            
         </div>
     </div>
 
@@ -255,25 +283,20 @@
         });
     </script>
 
-    <!--https://mdbootstrap.com/support/jquery/jquery-sortable-get-order/-->
-    <script>
-        $('#get').on('click', function () {
+<!--https://mdbootstrap.com/support/jquery/jquery-sortable-get-order/-->
+    <script>            
+        $('#get').on('click', function() {
 
             var idsInOrder = $("#sortable").sortable('toArray', {
-                attribute: 'data-id'
+            attribute: 'data-id'
             });
+
+            console.log("Deu certo")
             console.log(idsInOrder);
         })
     </script>
 
-    <script> 
-        var order = 0
-        function incrementLoop () {
-            order ++
-            document.getElementById('counter-label').value=(data.primeiroNome);
 
-        }
-    </script>
 
 </body>
 

@@ -20,10 +20,10 @@ import random
 def home(request):
     return render(request, 'home.html')
 
-
-def generateData():
+def generateData(self):
     runScriptGenerateDataPatient()
     makeGroups()
+    pass
 
 def validation(request, validateNumb):
 

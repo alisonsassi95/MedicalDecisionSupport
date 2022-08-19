@@ -15,9 +15,8 @@ def runScriptGenerateDataPatient():
         createFile()
     counter = 0
     while counter < 100:
-        print("Passou antes do Sleep")
-        sleep(50)
-        print("Passou DEPOIS do Sleep")
+        print("Passou Sleep"+counter)
+        sleep(1)
         insertOneRegisterInFile()
     counter += 1
 
