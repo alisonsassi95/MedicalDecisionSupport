@@ -54,5 +54,6 @@ Comandos inclusos no requirements:
 * Instalar Models-Utils: pip install django-model-utils
 * Instalar Pandas: pip install pandas
 * Instalar Scikit: pip install -U scikit-learn
-* Instalar Name Fake: pip install Faker 
+* Instalar Name Fake: pip install Faker
+* pip install dj-database-url
 <---------------------------------------------->

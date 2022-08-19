@@ -1,8 +1,32 @@
 import os
-import CalculateMDS
-from models import DataPatient
-from measurementNames import longTermSurvival
-from measurementNames import shortTermSurvival
+from time import sleep
+from .CalculateMDS import PersonalData
+from .CalculateMDS import ShortLifeForecast
+from .CalculateMDS import LongLifeForecast
+from .CalculateMDS import CalculateValuesOfPatient
+from .models import DataPatient
+from .measurementNames import longTermSurvival
+from .measurementNames import shortTermSurvival
+
+# Main Program
+def runScriptGenerateDataPatient():
+    exist = os.path.exists(NameFileExport)
+    if not (exist):
+        createFile()
+    counter = 0
+    while counter < 100:
+        print("Passou antes do Sleep")
+        sleep(50)
+        print("Passou DEPOIS do Sleep")
+        insertOneRegisterInFile()
+    counter += 1
+
+def insertOneRegisterInFile():
+    arq = open(NameFileExport,'a')
+    arq.write('\n')
+    dataGenerateRegister = generateRegister()
+    arq.write(dataGenerateRegister)
+    arq.close()
 
 NameFileExport = 'data_Calculate.csv'
 
@@ -12,17 +36,17 @@ def createFile():
     arq.close()
 
 def generateRegister():
-    patient = CalculateMDS.PersonalData.patient()
-    age = CalculateMDS.PersonalData.age()
-    neurological = CalculateMDS.ShortLifeForecast.neurological()
-    cardiovascular = CalculateMDS.ShortLifeForecast.cardiovascular()
-    respiratory = CalculateMDS.ShortLifeForecast.respiratory()
-    coagulation = CalculateMDS.ShortLifeForecast.coagulation()
-    hepatic = CalculateMDS.ShortLifeForecast.hepatic()
-    renal = CalculateMDS.ShortLifeForecast.renal()
-    icc = CalculateMDS.LongLifeForecast.ICC()
-    ecog = CalculateMDS.LongLifeForecast.ECOG(age)
-    scoreSOFA = CalculateMDS.CalculateValuesOfPatient.calculateSOFA(
+    patient = PersonalData.patient()
+    age = PersonalData.age()
+    neurological = ShortLifeForecast.neurological()
+    cardiovascular = ShortLifeForecast.cardiovascular()
+    respiratory = ShortLifeForecast.respiratory()
+    coagulation = ShortLifeForecast.coagulation()
+    hepatic = ShortLifeForecast.hepatic()
+    renal = ShortLifeForecast.renal()
+    icc = LongLifeForecast.ICC()
+    ecog = LongLifeForecast.ECOG(age)
+    scoreSOFA = CalculateValuesOfPatient.calculateSOFA(
         NEUROLOGICAL = neurological,
         CARDIOVASCULAR = cardiovascular,
         RESPIRATORY= respiratory,
@@ -30,17 +54,18 @@ def generateRegister():
         HEPATIC= hepatic,
         RENAL= renal
         )
-    scoreFragility = CalculateMDS.CalculateValuesOfPatient.calculateFragility(ecog)
-    scoreMinorTotal = CalculateMDS.CalculateValuesOfPatient.calculateTotal(
+    scoreFragility = CalculateValuesOfPatient.calculateFragility(ecog)
+    scoreMinorTotal = CalculateValuesOfPatient.calculateTotal(
         SOFA= int(scoreSOFA),
         ICC= int(icc),
         AGE= int(age)
         )
-    classification = CalculateMDS.CalculateClassification.Classification(
-        SCORE_SOFA = int(scoreSOFA),
-        SCORE_FRAGILITY = int(scoreFragility),
-        SCORE_TOTAL =int(scoreMinorTotal)
-        )
+    #classification = CalculateClassification.Classification(
+     #   SCORE_SOFA = int(scoreSOFA),
+      #  SCORE_FRAGILITY = int(scoreFragility),
+       # SCORE_TOTAL =int(scoreMinorTotal)
+       # )
+    classification = 0
 
     DataBase(patient,age,neurological,cardiovascular,respiratory,coagulation,hepatic,renal,icc,ecog,scoreMinorTotal,scoreFragility,scoreSOFA,classification)
 
@@ -92,24 +117,10 @@ def DataBase(patient,age,neurological,cardiovascular,respiratory,coagulation,hep
         scoreSOFA = scoreSOFA,
         scoreFragility = scoreFragility,
         scoreTotal = scoreMinorTotal,
-        classification=classification[0],
+        classification=classification,
         active = True,
         exported = False
     )
 
-def insertOneRegisterInFile():
-    arq = open(NameFileExport,'a')
-    arq.write('\n')
-    dataGenerateRegister = generateRegister()
-    arq.write(dataGenerateRegister)
-    arq.close()
 
-# Main Program
-exist = os.path.exists(NameFileExport)
-if not (exist):
-    createFile()
 
-counter = 0
-while counter < 1000:
-  insertOneRegisterInFile()
-  counter += 1

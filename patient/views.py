@@ -1,5 +1,6 @@
 
 from asyncio.windows_events import NULL
+from cmath import isnan
 from django.db.models import Count
 from django.db.models import Max
 from django.shortcuts import redirect, render
@@ -8,6 +9,7 @@ from .measurementNames import shortTermSurvival
 import pandas as pd
 from .models import DataPatient
 from .models import ValidationPatient
+from .GenerateFileDataBase import runScriptGenerateDataPatient
 
 #For test
 from faker import Faker
@@ -15,6 +17,12 @@ import random
 
 
 def home(request):
+    return render(request, 'home.html')
+
+
+def generateData(request):
+    runScriptGenerateDataPatient()
+    makeGroups()
     return render(request, 'home.html')
 
 def validation(request, validateNumb):
@@ -54,7 +62,7 @@ def validation(request, validateNumb):
 
 def patient(request):
     decisionAlgorithm = pd.read_pickle('Model_MDS.pickle')
-    '''
+    
     # Dados gerados.
     faker = Faker()
     patient = faker.name()
@@ -73,7 +81,8 @@ def patient(request):
     MeaningRenal = shortTermSurvival.renalName(renal)
     icc = random.randrange(2, 5, 2)
     MeaningIcc = longTermSurvival.iccName(icc)
-    ecog = random.randrange(0,4)
+    if (age >= 60): ecog = random.randrange(0,4)
+    else: ecog = 0
     MeaningEcog = longTermSurvival.ecogName(ecog)
     
     ''' # Dados do form.
@@ -95,7 +104,7 @@ def patient(request):
     MeaningIcc = longTermSurvival.iccName(int(icc))
     ecog = request.GET['ecog']
     MeaningEcog = longTermSurvival.ecogName(int(ecog))
-    
+    '''
     scoreSOFA = calculateSOFA(
         NEUROLOGICAL = neurological,
         CARDIOVASCULAR = cardiovascular,
@@ -104,7 +113,7 @@ def patient(request):
         HEPATIC= hepatic,
         RENAL= renal
         )
-    scoreFragility = ecog #(verificar se é valido para pessoas acima de 60 anos)
+    scoreFragility = ecog
 
     scoreTotal = calculateTotal(
         SOFA= int(scoreSOFA),
@@ -195,8 +204,11 @@ def createRegisterValidatePatient(valueIdPatient, ValidationGroup):
 
 def makeGroups(request):
     
-    quantityGroup = 10 # Tem que pegar da página
-    nextValueGroup = 1 + (ValidationPatient.objects.aggregate(Max('validationNumber'))['validationNumber__max'])
+    quantityGroup = 10
+    if(ValidationPatient.objects.all().count < 1):
+        nextValueGroup = 1
+    else:
+        nextValueGroup = 1 + (ValidationPatient.objects.aggregate(Max('validationNumber'))['validationNumber__max'])
 
     def split_list(lst, n):
         for i in range(0, len(lst), n):

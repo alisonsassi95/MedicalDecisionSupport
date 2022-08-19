@@ -339,31 +339,31 @@
                                         <!--Init-->
                                         <div class="form-check form-check-inline">
                                             <input id="ECOG0" name="ecog" type="radio" value="0"
-                                                class="form-check-input" required>
+                                                class="form-check-input">
                                             <label class="form-check-label" for="ECOG0"></label>
                                             <span class="item-subtitle"> Completamente ativo</span>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input id="ECOG1" name="ecog" type="radio" value="1"
-                                                class="form-check-input" required>
+                                                class="form-check-input">
                                             <label class="form-check-label" for="ECOG1"></label>
                                             <span class="item-subtitle"> Restrição a atividades físicas rigorosas</span>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input id="ECOG2" name="ecog" type="radio" value="2"
-                                                class="form-check-input" required>
+                                                class="form-check-input">
                                             <label class="form-check-label" for="ECOG2"></label>
                                             <span class="item-subtitle"> Auto-cuidados</span>
                                         </div>
                                         <div class="check-group">
                                             <input id="ECOG3" name="ecog" type="radio" value="3"
-                                                class="check-btn check-btn" required>
+                                                class="check-btn check-btn">
                                             <label class="check-btn check-btn" for="ECOG3"></label>
                                             <span class="item-title"> Auto-cuidados limitados</span>
                                         </div>
                                         <div class="check-group">
                                             <input id="ECOG4" name="ecog" type="radio" value="4"
-                                                class="check-btn check-btn" required>
+                                                class="check-btn check-btn">
                                             <label class="check-btn check-btn" for="ECOG4"></label>
                                             <span class="item-title"> Completamente incapaz</span>
                                         </div>
@@ -386,15 +386,16 @@
 
 <script>
 function checkoutAge(){
-    var checkbox = document.querySelector("#ECOG0");
 
     if((document.getElementById('age').value) < 60){
-        $("#ECOG").hide();
-        checkbox.checked = true;
+        $('#ECOG *').prop('disabled', true);
+        $('#ECOG0').prop('disabled', false);
+        setTimeout(2)
+        document.querySelector("#ECOG0").checked = true;
     }
     else
-        $("#ECOG").show();
-        checkbox.checked = false;
+        $('#ECOG *').prop('disabled', false);
+        document.querySelector("#ECOG0").checked = false;
 }
 </script>
 {% endblock content  %}
