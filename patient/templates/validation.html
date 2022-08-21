@@ -9,6 +9,9 @@
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet'>
     <link href='#' rel='stylesheet'>
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <style>
         ::-webkit-scrollbar {
             width: 8px;
@@ -37,6 +40,31 @@
             -webkit-box-flex: 1;
             -ms-flex: 1 1 auto;
             flex: 1 1 auto
+        }
+
+        .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            transition: 0.4s;
+        }
+
+        .active,
+        .accordion:hover {
+            background-color: #ccc;
+        }
+
+        .panel {
+            padding: 0 18px;
+            display: none;
+            background-color: white;
+            overflow: hidden;
         }
 
         @media (max-width:991.98px) {
@@ -116,6 +144,35 @@
             flex-shrink: 0;
             border-radius: 500px;
             box-shadow: 0 5px 10px 0 rgba(50, 50, 50, .15)
+        }
+
+        .item {
+            width: 100%;
+            height: 90px;
+            border: 1px solid black;
+        }
+
+        .item:hover {
+            border: 3px solid black;
+        }
+
+        #conteudo {
+            width: 95%;
+            height: 500px;
+            border: 2px solid #ccc;
+            padding: 10px;
+        }
+
+        .ico {
+            float: left;
+            width: 3%;
+            border: 2px solid #fff000;
+            cursor: move;
+        }
+
+        .conteudoItem {
+            float: left;
+            width: 90%;
         }
 
         .avatar img {
@@ -202,61 +259,125 @@
             $("#sortable").disableSelection();
         });
     </script>
+    <div class="page-content page-container" id="page-content">
+        <div class="padding">
+            {% if patient_records %}
+            <section>
+                <div class="100%" center>
+                    <ul id="sortable" class="list-group">
+                        {% for data in patient_records %}
+                        <div data-id={{data.idPatient__id}} id="Orders" class="card"> 01
+                            <div class="card-body">
+                                <h6 class="card-title">{{data.idPatient__patient}}</h6>
 
-        <div class="page-content page-container" id="page-content">
-            <div class="padding">
-                {% if patient_records %}
-                <section>
-                    <div class="100%" center>
-                        <ul id="sortable" class="list-group">
-
-                            {% for data in patient_records %}
-                            <div data-id={{data.idPatient__id}} class="card">
-                                <div class="card-body">
-                                    <h6 class="card-title">{{data.idPatient__patient}}</h6>
-
-                                    <p class="card-text">
-                                        Name: {{data.idPatient__patient}},
-                                        Idade: {{data.idPatient__age}}
-                                        Score Total: {{data.idPatient__scoreTotal}}
+                                <button class="accordion">Aferições do paciente</button>
+                                <div class="panel">
+                                    <p>
+                                        Idade: {{data.idPatient__age}} <br>
+                                        Score Total: {{data.idPatient__scoreTotal}} <br>
+                                        NEUROLÓGICO: {{ data.idPatient__MeaningNeurological }} <br>
+                                        CARDIOVASCULAR: {{ data.idPatient__MeaningCardiovascular }} <br>
+                                        RESPIRATÓRIO: {{ data.idPatient__MeaningRespiratory  }} <br>
+                                        COAGULAÇÃO: {{ data.idPatient__MeaningCoagulation }} <br>
+                                        HEPÁTICO: {{ data.idPatient__MeaningHepatic }} <br>
+                                        RENAL: {{ data.idPatient__MeaningRenal }} <br>
+                                        ICC: {{ data.idPatient__MeaningIcc }} <br>
+                                        ECOG: {{ data.idPatient__MeaningEcog }} <br>
                                     </p>
                                 </div>
                             </div>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <button id="get" type="submit" class="btn btn-success btn-block playlist">Pronto</button>
-                </section>
+                        </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <button id="get" type="submit" class="btn btn-success btn-block playlist">Pronto</button>
+            </section>
 
-                {% else %}
-                <p>Não existem dados para preencher!</p>
-                {% endif %}
-            </div>
+            {% else %}
+            <p>Não existem dados para preencher!</p>
+            {% endif %}
         </div>
-   
+    </div>
 
-    <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'></script>
+
+    <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'>
+    </script>
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+    </script>
+    <!--https://pt.stackoverflow.com/questions/75761/como-usar-o-m%C3%A9todo-update-do-jquery-sortable-->
+    <script>
+        /*$(function () {
+            console.log("entrou!")
+ //----------------------------------------------------------
+            $("#sortable").sortable({
+                axis: 'y',
+                handle: ".card",
+                start: function (event, ui) {
+                    ui.item.startPos = ui.item.index();
+                },
+                update: function (event, ui) {
+                    console.log("Posição inicial: " + ui.item.startPos + " Nova posição: " + ui.item.index());
+
+                    // Atualizando index para o usuário...
+                    // Obtendo todos os itens:
+                    var itens = $(this).children();
+                    console.log("Quantidade de itens: " + itens.length);
+
+                    // Atualizando valor em cada item:
+                    itens.each(function () {
+                        var item = $(this).children();
+                        console.log("Quantidade de filhos: " + item.length);
+
+                        var newVal = $(this).index() + 1;
+                        $(item).children('.index').html(newVal);
+
+                    });
+
+                    console.log("***********************************");
+                }
+            });
+
+            $("#sortable").disableSelection();
+ //----------------------------------------------------------
+        });*/
+    </script>
 
     <!--https://mdbootstrap.com/support/jquery/jquery-sortable-get-order/-->
     <script>
         $('#get').on('click', function () {
-
             var idsInOrder = $("#sortable").sortable('toArray', {
                 attribute: 'data-id'
             });
-
-            list=[]
-
+            var list = []
             for (var position = 0; position < (idsInOrder.length); position++) {
-                console.log({order: position+1, id_pacient: idsInOrder[position]}
-                
+                console.log({
+                        order: position + 1,
+                        id_pacient: idsInOrder[position]
+                    }
                 )
             }
-
+            // Envio para 
             $.ajax({
-                method: "GET",
-                href: "{% url 'validationMedical'%}",
-                data: {order: position+1, id_pacient: idsInOrder[position]} 
+                method: "POST",
+                href: "{%url 'validationMedical'%}",
+                data: {
+                    order: position + 1,
+                    id_pacient: idsInOrder[position]
+                }
             });
             console.log(idsInOrder);
         })
