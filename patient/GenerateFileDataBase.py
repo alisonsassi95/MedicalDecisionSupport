@@ -59,11 +59,11 @@ def generateRegister():
         ICC= int(icc),
         AGE= int(age)
         )
-    #classification = CalculateClassification.Classification(
-     #   SCORE_SOFA = int(scoreSOFA),
-      #  SCORE_FRAGILITY = int(scoreFragility),
-       # SCORE_TOTAL =int(scoreMinorTotal)
-       # )
+    classification = CalculateValuesOfPatient.Classification(
+        SCORE_SOFA = int(scoreSOFA),
+        SCORE_FRAGILITY = int(scoreFragility),
+        SCORE_TOTAL =int(scoreMinorTotal)
+        )
     classification = 0
 
     DataBase(patient,age,neurological,cardiovascular,respiratory,coagulation,hepatic,renal,icc,ecog,scoreMinorTotal,scoreFragility,scoreSOFA,classification)
@@ -117,7 +117,7 @@ def DataBase(patient,age,neurological,cardiovascular,respiratory,coagulation,hep
         scoreFragility = scoreFragility,
         scoreTotal = scoreMinorTotal,
         classification=classification,
-        active = True,
+        active = False,
         exported = False
     )
 

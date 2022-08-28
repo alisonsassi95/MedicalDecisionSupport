@@ -263,12 +263,16 @@
         <div class="padding">
             {% if patient_records %}
             <section>
-                <div class="100%" center>
+                <div class="group" center>
                     <ul id="sortable" class="list-group">
                         {% for data in patient_records %}
-                        <div data-id={{data.idPatient__id}} id="Orders" class="card"> 01
+                        <div data-id={{data.idPatient__id}} id="Orders" class="card">
+                            <div id="order">01</div>
+                            
                             <div class="card-body">
+                                <button id="report" type="submit" class="btn btn-block">Paciente Inválido</button>
                                 <h6 class="card-title">{{data.idPatient__patient}}</h6>
+                                
 
                                 <button class="accordion">Aferições do paciente</button>
                                 <div class="panel">
@@ -320,14 +324,13 @@
     </script>
     <!--https://pt.stackoverflow.com/questions/75761/como-usar-o-m%C3%A9todo-update-do-jquery-sortable-->
     <script>
-        /*$(function () {
-            console.log("entrou!")
- //----------------------------------------------------------
-            $("#sortable").sortable({
+        $(function () {
+            $("#group").sortable({
                 axis: 'y',
                 handle: ".card",
                 start: function (event, ui) {
-                    ui.item.startPos = ui.item.index();
+                    console.log("Chegou aqui");
+                    ui.card-body.startPos = ui.card-body.index();
                 },
                 update: function (event, ui) {
                     console.log("Posição inicial: " + ui.item.startPos + " Nova posição: " + ui.item.index());
@@ -353,7 +356,7 @@
 
             $("#sortable").disableSelection();
  //----------------------------------------------------------
-        });*/
+        });
     </script>
 
     <!--https://mdbootstrap.com/support/jquery/jquery-sortable-get-order/-->
@@ -370,10 +373,10 @@
                     }
                 )
             }
-            // Envio para 
+            // Envio para o Back
             $.ajax({
                 method: "POST",
-                href: "{%url 'validationMedical'%}",
+                action: "{% url 'validationMedical' %}",
                 data: {
                     order: position + 1,
                     id_pacient: idsInOrder[position]

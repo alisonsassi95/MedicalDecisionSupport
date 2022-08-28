@@ -58,12 +58,12 @@ class shortTermSurvival:
         return renalName[value]
 
 class longTermSurvival:
-    def iccName(value):
-        iccName = {
-            2: "Pacientes com expectativa de sobrevida inferior a cinco anos",
-            4: " Pacientes com expectativa de sobrevida inferior a um ano"
+    def SPICTName(value):
+        SPICTName = {
+            0: "Pacientes com expectativa de sobrevida inferior a cinco anos",
+            3: " Pacientes com expectativa de sobrevida inferior a um ano"
         }
-        return iccName[value]
+        return SPICTName[value]
 
     def ecogName(value):
         ecogName = {

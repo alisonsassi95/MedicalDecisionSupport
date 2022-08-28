@@ -64,6 +64,7 @@ def validation(request, validateNumb):
 def patient(request):
     decisionAlgorithm = pd.read_pickle('Model_MDS.pickle')
     
+    '''
     # Dados gerados.
     faker = Faker()
     patient = faker.name()
@@ -105,7 +106,6 @@ def patient(request):
     MeaningIcc = longTermSurvival.iccName(int(icc))
     ecog = request.GET['ecog']
     MeaningEcog = longTermSurvival.ecogName(int(ecog))
-    '''
     scoreSOFA = calculateSOFA(
         NEUROLOGICAL = neurological,
         CARDIOVASCULAR = cardiovascular,
@@ -169,14 +169,14 @@ def patient(request):
         scoreTotal = scoreTotal,
         classification=classification[0],
         active = True,
-        exported = False
+        exported = True
     )
 
     activePatients = DataPatient.objects.filter(active=True).count()
     totalPatients = DataPatient.objects.values_list().count()
     exportedPatients = DataPatient.objects.filter(exported=True).count()
     waitingExportPatients = DataPatient.objects.filter(exported=False).count()
-    topfive = DataPatient.objects.all()[:5]
+    topfive = DataPatient.objects.filter(exported=True,active=True)
 
 
     return render(request, 'patients.html',
@@ -191,7 +191,7 @@ def patient(request):
 
 def modifyValueExported(ValueId):
     for idPatient in DataPatient.objects.filter(id=ValueId):
-        idPatient.exported = True
+        idPatient.exported = False
         idPatient.save()
 
 def createRegisterValidatePatient(valueIdPatient, ValidationGroup):
