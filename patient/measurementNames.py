@@ -60,8 +60,8 @@ class shortTermSurvival:
 class longTermSurvival:
     def SPICTName(value):
         SPICTName = {
-            0: "Pacientes com expectativa de sobrevida inferior a cinco anos",
-            3: " Pacientes com expectativa de sobrevida inferior a um ano"
+            0: "Paciente sem problemas graves",
+            3: "Pacientes com expectativa de sobrevida inferior a um ano"
         }
         return SPICTName[value]
 
