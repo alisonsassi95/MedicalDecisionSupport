@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from patient import views
 
 urlpatterns = [
@@ -14,5 +14,8 @@ urlpatterns = [
     path('generateData/', views.generateData, name='generateData'),
     path('makeGroups/', views.makeGroups, name='makeGroups'),
     #path('exported/<int:pk>', views.exportedPatient, name='exported') # Vai ser para colocar a marcação de exportado.
-    path('disable/<int:ValueId>', views.disablePatient, name='disable')
+    path('disable/<int:ValueId>', views.disablePatient, name='disable'),
+
+    #path('accounts/', include('accounts.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

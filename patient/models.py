@@ -3,8 +3,7 @@ from django.db import models
 #from model_utils.models import TimeStampedModel
 
 class DataPatient(models.Model):
-    patient = models.CharField(max_length=200)
-    age = models.IntegerField()
+    name_patient = models.CharField(max_length=200)
     neurological = models.IntegerField()
     MeaningNeurological = models.CharField(max_length=200)
     cardiovascular = models.IntegerField()
@@ -17,13 +16,12 @@ class DataPatient(models.Model):
     MeaningHepatic = models.CharField(max_length=200)
     renal = models.IntegerField()
     MeaningRenal = models.CharField(max_length=200)
-    icc = models.IntegerField()
-    MeaningIcc = models.CharField(max_length=200)
+    spict = models.IntegerField()
+    MeaningSpict = models.CharField(max_length=200)
     ecog = models.IntegerField()
     MeaningEcog = models.CharField(max_length=200)
     scoreSOFA = models.IntegerField()
-    scoreFragility = models.IntegerField()
-    scoreTotal = models.IntegerField()
+    scoreAmib = models.IntegerField()
     classification = models.IntegerField()
     active = models.BooleanField()
     exported = models.BooleanField()

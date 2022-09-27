@@ -50,6 +50,8 @@ def __main__():
         patient.append(R[9])
         #GRUPO
         patient.append(R[10])
+        #Inserindo no banco de dados
+        DataBase(faker.name(),R[1],cardiovascularName(int(R[1])),R[2],respiratoryName(int(R[2])),R[3],coagulationName(int(R[3])),R[4],hepaticName(int(R[4])),R[5],renalName(int(R[5])),R[6],SPICTName(int(R[6])),R[7],ecogName(int(R[7])),R[8],R[9],R[10])
 
         File = str(patient).replace("'","").replace("[","'").replace("]","").replace("\u2264", "-")
         print(File)
